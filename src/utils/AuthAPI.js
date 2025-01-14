@@ -1,16 +1,12 @@
 import axios from './axios-customize'
 
 export const register = async (payload) => {
-    const formData = new FormData();
     console.log(payload);
+    return await axios.post('/auth/register', payload)
+}
 
-    for (const key in payload) {
-        formData.append(key, payload[key]);
-    }
+export const login = async (payload) => {
+    console.log(payload);
+    return await axios.post('/auth/login', payload)
 
-    return await axios.post('/auth/register', formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        }
-    })
 }

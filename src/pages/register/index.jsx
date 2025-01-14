@@ -1,16 +1,19 @@
-import { Button, Checkbox, Col, Form, Image, Input, Row } from "antd"
+import { Button, Checkbox, Col, Form, Image, Input, message, notification, Row } from "antd"
 import { useEffect } from "react"
 import './style.css'
 import { register } from "../../utils/AuthAPI"
+import { HttpStatusCode } from "axios"
+import { useNavigate } from "react-router-dom"
 
 const RegisterPage = () => {
 
+    const navigate = useNavigate()
+
     useEffect(() => {
-        document.title = "Register Page"
+        document.title = "Register Account"
     }, [])
 
     const handleRegister = async (values) => {
-        console.log(values);
         const payload = {
             UserName: values.username,
             Email: values.email,
@@ -19,7 +22,21 @@ const RegisterPage = () => {
         }
 
         const result = await register(payload)
-        console.log(result);
+        if (result.status) {
+            console.log(result);
+
+            notification.error({
+                message: "Tạo mới tài khoản thất bại",
+                description: result?.data?.message
+            })
+        } else {
+            notification.success({
+                message: "Tạo mới tài khoản thành công"
+            })
+
+            navigate('/login')
+        }
+
 
     }
 
@@ -39,7 +56,7 @@ const RegisterPage = () => {
             <Col span={13}>
                 <div style={{ padding: '80px' }}>
                     <h2 style={{ fontSize: "48px", fontWeight: "normal" }}>Đăng ký</h2>
-                    <p style={{ fontWeight: "400" }}>Đã có tài khoản?&nbsp;<a href="#">Đăng nhập</a></p>
+                    <p style={{ fontWeight: "400" }}>Đã có tài khoản?&nbsp;<a href="/login">Đăng nhập</a></p>
                     <Button type="primary" style={{ marginBlock: "15px", paddingInline: "30px" }}>
                         Google
                     </Button>
