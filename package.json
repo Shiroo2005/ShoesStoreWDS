@@ -10,7 +10,8 @@
         "preview": "vite preview"
     },
     "dependencies": {
-        "antd": "^5.23.0",
+        "@ant-design/icons": "^5.5.2",
+        "antd": "^5.23.1",
         "axios": "^1.7.9",
         "fe_shoes_store": "file:",
         "react": "^18.3.1",

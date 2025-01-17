@@ -1,0 +1,45 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 0 24px;
+    border-bottom: 1px solid #f0f0f0;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header .ant-typography {
+    font-weight: bold;
+    color: #4a4a4a;
+}
+
+.search {
+    width: 200px;
+}
+
+.adjusted-search {
+    margin-right: auto; 
+    border-radius: 20px; 
+    background-color: #f0f0f0; 
+    color: #1890ff; }
+
+.logoutbutton {
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.logoutbutton-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: #ff4d4f;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.logoutbutton-wrapper:hover {
+    background-color: #ff7875;
+}

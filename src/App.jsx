@@ -1,57 +1,22 @@
-import React, { useState } from 'react';
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
-import Header from './components/header';
-import Footer from './components/footer';
-import Home from './components/home';
-import ContactPage from './components/contact';
-import LoginPage from './pages/login';
-import RegisterPage from './pages/register';
-import './styles/global.css'
+import { Layout } from "antd";
+// import { AdminHeader } from './components/AdminHeader.jsx';
+import AdminHeader from './components/headeradmin/AdminHeader.jsx';
 
+import Sidebar from './components/Sidebar.jsx';
+import Dashboard  from './components/Dashboard.jsx';
 
-const Layout = () => {
+const App = () => {
   return (
-    <>
-      <Header />
-      <Outlet />
-      <Footer />
-    </>
-  )
-}
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        index: true,
-        element: <Home />
-      },
-      {
-        path: "contact",
-        element: <ContactPage />,
-      },
-
-    ]
-  },
-  {
-    path: "/login",
-    element: <LoginPage />
-  },
-  {
-    path: "/register",
-    element: <RegisterPage />
-  }
-]);
-
-
-export default function App() {
-
-
-  return (
-    <>
-      <RouterProvider router={router} />
-    </>
+    <Layout style={{ minHeight: '100vh' }}>
+      <Sidebar />
+      <Layout>
+        <AdminHeader />
+        <Layout.Content style={{ background: '#f0f2f5' }}>
+          <Dashboard />
+        </Layout.Content>
+      </Layout>
+    </Layout>
   );
-}
+};
+
+export default App;
