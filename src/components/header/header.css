@@ -1,0 +1,36 @@
+.app-header {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 0 40px;
+  height: 70px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff9f0a;
+}
+
+.menu {
+  flex: 1;
+  display: flex;
+  justify-content: space-evenly;
+  border-bottom: none;
+}
+
+.menu .ant-menu-item {
+  font-size: 20px;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.icon {
+  font-size: 28px;
+  cursor: pointer;
+  color: #000;
+}
