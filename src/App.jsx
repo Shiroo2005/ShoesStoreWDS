@@ -2,7 +2,7 @@ import { Layout } from "antd";
 // import { AdminHeader } from './components/AdminHeader.jsx';
 import AdminHeader from './components/headeradmin/AdminHeader.jsx';
 
-import Sidebar from './components/Sidebar.jsx';
+import Sidebar from './components/Sidebar/Sidebar.jsx';
 import Dashboard  from './components/Dashboard.jsx';
 
 const App = () => {

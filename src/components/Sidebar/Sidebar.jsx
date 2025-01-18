@@ -1,5 +1,6 @@
 import { Layout, Menu, Typography } from "antd";
-import { HomeOutlined, UserOutlined, ShoppingOutlined, FileOutlined } from "@ant-design/icons";
+import { HomeOutlined, UserOutlined, ShoppingOutlined, DollarOutlined } from "@ant-design/icons";
+import "./index.css"; 
 
 const { Sider } = Layout;
 const { Title } = Typography;
@@ -9,18 +10,22 @@ const Sidebar = () => {
     { key: "1", icon: <HomeOutlined />, label: "TRANG CHỦ" },
     { key: "2", icon: <UserOutlined />, label: "KHÁCH HÀNG" },
     { key: "3", icon: <ShoppingOutlined />, label: "SẢN PHẨM" },
-    { key: "4", icon: <FileOutlined />, label: "ĐƠN HÀNG" },
+    { key: "4", icon: <DollarOutlined />, label: "ĐƠN HÀNG" },
   ];
 
   return (
-    <Sider width={200} theme="light">
-      <div style={{ padding: 16, textAlign: 'center' }}>
-        <Title level={4}>WDSHOE</Title>
+    <Sider width={200} className="sidebar">
+      <div className="logoweb">
+        <Title level={4} className="logoweb">WDSHOE</Title>
       </div>
       <Menu
         mode="inline"
         defaultSelectedKeys={["1"]}
-        items={menuItems}
+        items={menuItems.map(item => ({
+          ...item,
+          className: "menu-item"
+        }))}
+        className="menu"
       />
     </Sider>
   );

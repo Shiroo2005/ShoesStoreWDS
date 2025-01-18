@@ -1,7 +1,6 @@
 .header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    align-items: center; 
     background-color: #ffffff;
     padding: 0 24px;
     border-bottom: 1px solid #f0f0f0;
@@ -11,22 +10,25 @@
 .header .ant-typography {
     font-weight: bold;
     color: #4a4a4a;
+    margin-right: 16px; 
 }
 
 .search {
+    color: #8BA3CB;
+    background-color: #F5F7FA;
     width: 200px;
+    margin-right: 250px; 
+    margin-left: 200px;
+    border-radius: 20px;
+    border: 1px solid #d9d9d9;
+    padding: 4px 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.search ::placeholder {
+    color: #A5B0C1; 
+    opacity: 1; 
 }
 
-.adjusted-search {
-    margin-right: auto; 
-    border-radius: 20px; 
-    background-color: #f0f0f0; 
-    color: #1890ff; }
-
-.logoutbutton {
-    font-size: 18px;
-    color: #ffffff;
-}
 
 .logoutbutton-wrapper {
     display: flex;

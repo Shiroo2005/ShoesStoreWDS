@@ -1,0 +1,56 @@
+/* CSS cho Sidebar */
+.sidebar {
+    height: 100vh; /* Full chiều cao màn hình */
+    background-color: #ffffff; /* Màu nền */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+    width: 300px;
+  }
+.sidebar .logoweb{
+    color:#ff9800;
+    padding: 10px;
+    padding-left: 20px;
+    
+}
+
+.sidebar .logo {
+text-align: center;
+padding: 16px;
+font-size: 18px;
+font-weight: bold;
+color: #ff9800; /* Màu logo */
+border-bottom: 1px solid #ddd; /* Đường viền dưới logo */
+}
+
+.sidebar .menu {
+flex: 1;
+}
+
+.sidebar .menu-item {
+display: flex;
+align-items: center;
+padding: 10px 15px; /* Điều chỉnh phù hợp */
+font-size: 16px;
+color: #333; /* Màu chữ mặc định */
+transition: color 0.3s, background-color 0.3s;
+outline: none; /* Xóa viền mặc định */
+position: relative; /* Để thanh màu cam nằm sát bên trái */
+}
+
+.sidebar .menu-item:hover {
+background-color: transparent; /* Không thay đổi màu nền khi hover */
+color: #ff9800; /* Màu chữ khi hover */
+}
+
+.sidebar .menu-item.ant-menu-item-selected {
+background-color: transparent; /* Không thay đổi màu nền khi được chọn */
+color: #ff9800; /* Màu chữ khi được chọn */
+border-left: 6px solid #ff9800; /* Thanh màu cam bên trái */
+border-radius: 0 10px 10px 0; /* Bo tròn góc bên phải của thanh màu cam */
+font-weight: bold; /* In đậm chữ khi được chọn */
+}
+
+.sidebar .menu-item .anticon {
+margin-right: 10px; /* Khoảng cách giữa icon và chữ */
+}
