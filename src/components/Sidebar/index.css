@@ -1,56 +1,60 @@
-/* CSS cho Sidebar */
+@import url('https://fonts.googleapis.com/css2?family=Aclonica&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Aclonica&family=Inter:wght@400;600&display=swap');
+
 .sidebar {
-    height: 100vh; /* Full chiều cao màn hình */
-    background-color: #ffffff; /* Màu nền */
+    height: 100vh;
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     width: 300px;
-  }
-.sidebar .logoweb{
-    color:#ff9800;
+}
+
+.sidebar .logoweb {
+    font-family: 'Aclonica', sans-serif;
+    color: #ff9800;
     padding: 10px;
     padding-left: 20px;
-    
 }
 
 .sidebar .logo {
-text-align: center;
-padding: 16px;
-font-size: 18px;
-font-weight: bold;
-color: #ff9800; /* Màu logo */
-border-bottom: 1px solid #ddd; /* Đường viền dưới logo */
+    text-align: center;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff9800;
+    border-bottom: 1px solid #ddd;
 }
 
 .sidebar .menu {
-flex: 1;
+    flex: 1;
 }
 
 .sidebar .menu-item {
-display: flex;
-align-items: center;
-padding: 10px 15px; /* Điều chỉnh phù hợp */
-font-size: 16px;
-color: #333; /* Màu chữ mặc định */
-transition: color 0.3s, background-color 0.3s;
-outline: none; /* Xóa viền mặc định */
-position: relative; /* Để thanh màu cam nằm sát bên trái */
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #333;
+    transition: color 0.3s, background-color 0.3s;
+    outline: none;
+    position: relative;
+    font-family: 'Inter', sans-serif;
 }
 
 .sidebar .menu-item:hover {
-background-color: transparent; /* Không thay đổi màu nền khi hover */
-color: #ff9800; /* Màu chữ khi hover */
+    background-color: transparent;
+    color: #ff9800;
 }
 
 .sidebar .menu-item.ant-menu-item-selected {
-background-color: transparent; /* Không thay đổi màu nền khi được chọn */
-color: #ff9800; /* Màu chữ khi được chọn */
-border-left: 6px solid #ff9800; /* Thanh màu cam bên trái */
-border-radius: 0 10px 10px 0; /* Bo tròn góc bên phải của thanh màu cam */
-font-weight: bold; /* In đậm chữ khi được chọn */
+    background-color: transparent;
+    color: #ff9800;
+    border-left: 6px solid #ff9800;
+    border-radius: 0 10px 10px 0;
+    font-weight: bold;
 }
 
 .sidebar .menu-item .anticon {
-margin-right: 10px; /* Khoảng cách giữa icon và chữ */
+    margin-right: 10px;
 }
