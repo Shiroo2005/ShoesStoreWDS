@@ -6,6 +6,7 @@ import Home from './components/home';
 import ContactPage from './components/contact';
 import LoginPage from './pages/login';
 import RegisterPage from './pages/register';
+import OrderPage from './pages/order';
 import './styles/global.css'
 
 
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <RegisterPage />
+  },
+  {
+    path: "/order",
+    element: <OrderPage />
   }
 ]);
 
