@@ -1,0 +1,47 @@
+/* .choosecard{
+    height:170px;
+    border-radius: 20px;
+}
+
+.icons{
+    size: 50px;
+} */
+ /* Bao toàn bộ card */
+.choosecard {
+    border-radius: 20px; /* Bo góc card */
+    overflow: hidden; /* Đảm bảo không tràn nội dung */
+    padding: 0; /* Xóa padding mặc định của Ant Design Card */
+  }
+  
+  /* Wrapper cho nội dung chính */
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  /* Header chứa thông tin và icon */
+  .card-header {
+    display: flex;
+    justify-content: space-between; /* Đẩy icon sang phải */
+    align-items: center;
+    padding: 16px; /* Padding trong header */
+  }
+  
+  /* Icon ở bên phải */
+  .icon-right {
+    font-size: 32px; /* Kích thước icon */
+    color: #fff;
+  }
+  
+  /* Phần thông tin thêm */
+  .info-box {
+    background-color: rgba(0, 0, 0, 0.1); /* Màu nền khác cho phần dưới */
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 12px 0; /* Padding nội dung */
+    margin: 0; /* Không margin để bao trọn vùng dưới */
+  }
+  

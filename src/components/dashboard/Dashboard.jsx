@@ -1,7 +1,7 @@
 import { Row, Col } from "antd";
 import { ShoppingCartOutlined, UserOutlined, AppstoreOutlined } from "@ant-design/icons";
-import DashboardCard from './DashboardCard';
-
+import DashboardCard from '../dashboardcard/DashboardCard.jsx';
+import '../dashboardcard/DashboardCard.css'
 const Dashboard = () => {
   const dashboardData = [
     {
@@ -14,7 +14,7 @@ const Dashboard = () => {
       title: "KHÁCH HÀNG",
       value: "117",
       color: "#faad14",
-      icon: <UserOutlined />
+      icon: <UserOutlined  />
     },
     {
       title: "SẢN PHẨM",
