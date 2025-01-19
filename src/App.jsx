@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
-import Header from './components/header';
-import Footer from './components/footer';
-import Home from './components/home';
+import Header from './components/header/header';
+import Footer from './components/footer/footer';
 import ContactPage from './components/contact';
 import LoginPage from './pages/login';
 import RegisterPage from './pages/register';
+import HomePage from './pages/HomePage/HomePage';
 import './styles/global.css'
 
 
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />
+        element: <HomePage />
       },
       {
         path: "contact",
