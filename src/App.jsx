@@ -8,6 +8,7 @@ import RegisterPage from './pages/register';
 import OrderPage from './pages/order';
 import HomePage from './pages/HomePage/HomePage';
 import './styles/global.css'
+import HomeAdminPage from './pages/admin/home';
 
 
 const Layout = () => {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />
+  },
+  {
+    path: "/admin",
+    element: <HomeAdminPage />
   },
   {
     path: "/register",

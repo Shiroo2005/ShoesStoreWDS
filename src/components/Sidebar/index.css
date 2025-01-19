@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Aclonica&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Aclonica&family=Inter:wght@400;600&display=swap');
+
+.sidebar {
+    height: 100vh;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.sidebar .logoweb {
+    font-family: 'Aclonica', sans-serif;
+    color: #ff9800;
+    padding: 10px;
+    padding-left: 20px;
+}
+
+.sidebar .logo {
+    text-align: center;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff9800;
+    border-bottom: 1px solid #ddd;
+}
+
+.sidebar .menu {
+    flex: 1;
+}
+
+.sidebar .menu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #333;
+    transition: color 0.3s, background-color 0.3s;
+    outline: none;
+    position: relative;
+    font-family: 'Inter', sans-serif;
+}
+
+.sidebar .menu-item:hover {
+    background-color: transparent;
+    color: #ff9800;
+}
+
+.sidebar .menu-item.ant-menu-item-selected {
+    background-color: transparent;
+    color: #ff9800;
+    border-left: 6px solid #ff9800;
+    border-radius: 0 10px 10px 0;
+    font-weight: bold;
+}
+
+.sidebar .menu-item .anticon {
+    margin-right: 10px;
+}
