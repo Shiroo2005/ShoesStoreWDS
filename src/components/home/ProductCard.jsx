@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Card, Rate, Button } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 
