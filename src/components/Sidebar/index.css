@@ -27,19 +27,30 @@
 }
 
 .sidebar .menu {
-    flex: 1;
+    margin-left: 0;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .sidebar .menu-item {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     padding: 10px 15px;
     font-size: 16px;
     color: #333;
     transition: color 0.3s, background-color 0.3s;
-    outline: none;
-    position: relative;
     font-family: 'Inter', sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar .menu-item .anticon {
+    margin-right: 5px; 
+    font-size: 18px;
 }
 
 .sidebar .menu-item:hover {
@@ -53,8 +64,4 @@
     border-left: 6px solid #ff9800;
     border-radius: 0 10px 10px 0;
     font-weight: bold;
-}
-
-.sidebar .menu-item .anticon {
-    margin-right: 10px;
 }
