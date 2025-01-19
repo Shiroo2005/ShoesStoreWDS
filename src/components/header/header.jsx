@@ -1,21 +1,52 @@
 import { Menu } from "antd";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import "./header.css";
+import HomePage from "../../pages/HomePage/HomePage";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const Header = () => {
+  const navigate = useNavigate()
+  const param = useParams()
+
+  const items = [
+    {
+      label: 'Trang chủ',
+      key: '/'
+    },
+    {
+      key: '/product',
+      label: 'Bộ sưu tập'
+    },
+    {
+      key: '/notification',
+      label: 'Thông báo'
+    },
+    {
+      key: '/about',
+      label: 'Cửa hàng'
+    },
+    {
+      key: '/contact',
+      label: 'Liên hệ'
+    },
+  ]
+
   return (
     <div className="app-header">
       {/* Logo */}
       <div className="logo">WDSHOE</div>
 
       {/* Menu */}
-      <Menu mode="horizontal" defaultSelectedKeys={["1"]} className="menu">
-        <Menu.Item key="1">Trang chủ</Menu.Item>
-        <Menu.Item key="2">Bộ sưu tập</Menu.Item>
-        <Menu.Item key="3">Thông báo</Menu.Item>
-        <Menu.Item key="4">Cửa hàng</Menu.Item>
-        <Menu.Item key="5">Liên hệ</Menu.Item>
-      </Menu>
+      <Menu mode="horizontal"
+        defaultSelectedKeys={['/']}
+        className="menu"
+        items={items}
+        onClick={(e) => {
+          navigate(e.key)
+        }}
+        selectedKeys={[location.pathname]}
+      />
 
       {/* Icons */}
       <div className="icons">

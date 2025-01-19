@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import Header from './components/header/header';
 import Footer from './components/footer/footer';
-import ContactPage from './components/contact';
 import OrderPage from './pages/order';
 import HomePage from './pages/HomePage/HomePage';
 import './styles/global.css'
@@ -10,6 +9,9 @@ import HomeAdminPage from './pages/admin/home';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import ProductDetail from './pages/ProductDetail/ProductDetail';
+import ContactPage from './pages/Contact/Contact';
+import NotFoundPage from './pages/Error/NotFoundPage/NotFound';
+import AboutPage from './pages/About/About';
 
 
 const Layout = () => {
@@ -26,6 +28,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
+    errorElement: <NotFoundPage />,
     children: [
       {
         index: true,
@@ -38,7 +41,11 @@ const router = createBrowserRouter([
       {
         path: "products/:id",
         element: <ProductDetail />
-      }
+      },
+      {
+        path: "about",
+        element: <AboutPage />
+      },
     ]
   },
   {
