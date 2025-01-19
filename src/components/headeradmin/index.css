@@ -16,9 +16,10 @@
 .search {
     color: #8BA3CB;
     background-color: #F5F7FA;
-    width: 200px;
-    margin-right: 250px; 
+    width: 300px;
+    margin-right: 150px; 
     margin-left: 200px;
+    margin-bottom: 20px;
     border-radius: 20px;
     border: 1px solid #d9d9d9;
     padding: 4px 12px;
