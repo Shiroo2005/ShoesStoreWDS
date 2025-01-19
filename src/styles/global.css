@@ -1,9 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&display=swap");
 
 * {
-    margin: 0;
-    padding: 0px;
-    box-sizing: border-box;
-    font-family: 'Inter Tight', serif
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Be Vietnam Pro", sans-serif;
+}
+
+.order-container {
+  padding: 1rem 2rem;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-title {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.order-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  color: #f0f0f0;
+  background-color: #007bff;
 }
