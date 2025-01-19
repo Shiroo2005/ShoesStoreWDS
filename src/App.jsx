@@ -9,6 +9,7 @@ import './styles/global.css'
 import HomeAdminPage from './pages/admin/home';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
+import ProductDetail from './pages/ProductDetail/ProductDetail';
 
 
 const Layout = () => {
@@ -34,7 +35,10 @@ const router = createBrowserRouter([
         path: "contact",
         element: <ContactPage />,
       },
-
+      {
+        path: "products/:id",
+        element: <ProductDetail />
+      }
     ]
   },
   {
