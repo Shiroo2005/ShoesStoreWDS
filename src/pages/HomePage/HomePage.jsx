@@ -128,7 +128,7 @@ const HomePage = () => {
         </Row>
 
         {/* Search Bar and Category */}
-        <Row style={{ marginBottom: "22px" }}>
+        <Row style={{ marginBottom: "22px" }} gutter={16}>
           <Col span={11}>
             <Search
               placeholder="Tìm kiếm sản phẩm"
@@ -136,7 +136,7 @@ const HomePage = () => {
               onSearch={onSearch}
               size="large"
               style={{
-                width: 360,
+                width: "100%",
               }}
             />
           </Col>
@@ -147,6 +147,7 @@ const HomePage = () => {
               items={items}
               type="card"
               onChange={onChangeTabs}
+              size="middle"
             />
           </Col>
         </Row>

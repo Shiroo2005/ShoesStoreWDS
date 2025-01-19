@@ -65,3 +65,7 @@
     border-radius: 0 10px 10px 0;
     font-weight: bold;
 }
+.sidebar .menu-item .anticon {
+    margin-right: 10px;
+}
+
