@@ -1,6 +1,6 @@
 import { Button, Checkbox, Col, Form, Image, Input, message, notification, Row } from "antd"
 import { useEffect } from "react"
-import './style.css'
+import './register.css'
 import { register } from "../../utils/AuthAPI"
 import { HttpStatusCode } from "axios"
 import { useNavigate } from "react-router-dom"

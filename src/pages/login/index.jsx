@@ -3,7 +3,7 @@ import { useEffect } from "react"
 import { login } from "../../utils/AuthAPI"
 import { useNavigate } from "react-router-dom"
 
-const RegisterPage = () => {
+const LoginPage = () => {
 
     const navigate = useNavigate()
 
@@ -132,4 +132,4 @@ const RegisterPage = () => {
     )
 }
 
-export default RegisterPage
+export default LoginPage
