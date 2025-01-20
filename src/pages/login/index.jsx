@@ -2,10 +2,13 @@ import { Button, Checkbox, Col, Form, Image, Input, notification, Row } from "an
 import { useEffect } from "react"
 import { login } from "../../utils/AuthAPI"
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { doLoginAction } from "../../redux/account/accountSlice"
 
 const LoginPage = () => {
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     useEffect(() => {
         document.title = "Login Account"
@@ -24,13 +27,15 @@ const LoginPage = () => {
                 message: "Đăng nhập thành công"
             }
             )
+            localStorage.setItem("access_token", result.accesstoken)
+            localStorage.setItem("refresh_token", result.refreshtoken)
+            dispatch(doLoginAction(result.user))
             navigate('/')
 
             console.log(result);
 
 
-            localStorage.setItem("access_token", result.accesstoken),
-                localStorage.setItem("refresh_token", result.refreshtoken)
+
         }
 
 
@@ -53,9 +58,10 @@ const LoginPage = () => {
                 <div style={{ padding: '100px' }}>
                     <h2 style={{ fontSize: "48px", fontWeight: "normal" }}>Đăng nhập</h2>
                     <p style={{ fontWeight: "400" }}>Chưa có tài khoản?&nbsp;<a href="/register">Đăng ký</a></p>
-                    <Button type="primary" style={{ marginBlock: "15px", paddingInline: "30px" }}>
-                        Google
+                    <Button type="primary" onClick={() => navigate('/')} style={{ marginBlock: "15px", paddingInline: "30px", width: "auto" }}>
+                        Trang chủ
                     </Button>
+
                     <br />
                     <b>hoặc đăng nhập bằng email</b>
 

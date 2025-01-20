@@ -1,16 +1,27 @@
-import { Menu } from "antd";
-import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { Dropdown, Menu, message, Space } from "antd";
+import { UserOutlined, ShoppingCartOutlined, LoginOutlined, DownOutlined } from "@ant-design/icons";
 import "./header.css";
 import HomePage from "../../pages/HomePage/HomePage";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../utils/AuthAPI";
+import { doLogoutAction } from "../../redux/account/accountSlice";
 
 const Header = () => {
   const user = useSelector(state => state.account.user)
+  const dispatch = useDispatch()
 
-  const navigate = useNavigate()
-  const param = useParams()
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    const result = await logout(user.id)
+    if (result.message) {
+      message.success(result.message)
+      navigate('/login')
+      dispatch(doLogoutAction())
+    }
+  }
 
   const items = [
     {
@@ -25,6 +36,26 @@ const Header = () => {
       key: '/contact',
       label: 'Liên hệ'
     },
+  ]
+
+  const settings = [
+    {
+      label:
+        <a href="#" rel="noopener noreferrer">
+          Setting
+        </a>
+      ,
+      key: '0',
+    },
+    {
+      label:
+        <a onClick={handleLogout} rel="noopener noreferrer">
+          Logout
+        </a>
+      ,
+      key: '1',
+    },
+
   ]
 
   return (
@@ -45,10 +76,30 @@ const Header = () => {
 
       {/* Icons */}
       <div className="icons">
-        <div>
-          <span>Hello, <a href="#">{user.userName} </a></span>
-        </div>
-        <ShoppingCartOutlined className="icon" />
+        {user.userName ? (
+          <>
+            <Dropdown
+              menu={{
+                items: settings
+              }}
+              trigger={['click']}
+            >
+              <a onClick={(e) => e.preventDefault()}>
+                <Space>
+                  <a href="#">Hello, {user.userName}</a>
+                  <DownOutlined />
+                </Space>
+              </a>
+            </Dropdown>
+
+            <ShoppingCartOutlined className="icon" />
+          </>
+
+        ) : (
+
+          <a href="/login">Đăng nhập</a>
+        )}
+
       </div>
     </div>
   );

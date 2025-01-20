@@ -12,10 +12,6 @@ const Filter = () => {
       ],
     },
     {
-      title: "Màu sắc",
-      options: ["Đen", "Trắng", "Đỏ", "Be"],
-    },
-    {
       title: "Thương hiệu",
       options: ["Adidas", "Nike", "Puma"],
     },
