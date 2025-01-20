@@ -10,10 +10,10 @@ const instance = axios.create({
 instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` }
 
 const handleRefresh = async () => {
-    const response = await instance.get('/auth/refresh')
+    const response = await instance.post('/api/accesstoken')
 
-    if (response && response.data) {
-        return response.data.access_token
+    if (response) {
+        return response.accessToken
     } else return null
 
 }
@@ -36,31 +36,30 @@ instance.interceptors.response.use(function (response) {
     return response?.data
 }, async function (error) {
 
-    // // access token expired
-    // if (error.response.status == 401 && !error.config.headers[NO_RETRY_HEADER]) {
-    //     const access_token = await handleRefresh()
-    //     error.config.headers[NO_RETRY_HEADER] = 'true'
-    //     if (access_token) {
-    //         localStorage.setItem("access_token", access_token)
+    // access token expired
+    if (error.status == 401 && !error.config.headers[NO_RETRY_HEADER]) {
+        const access_token = await handleRefresh()
+        error.config.headers[NO_RETRY_HEADER] = 'true'
+        if (access_token) {
+            localStorage.setItem("access_token", access_token)
 
-    //         error.config.headers['Authorization'] = `Bearer ${access_token} `
-    //         return axios.request(error.config)
-    //     }
-    // }
+            error.config.headers['Authorization'] = `Bearer ${access_token} `
+            return axios.request(error.config)
+        }
+    }
 
-    // //refresh token expired
-    // if (
-    //     error.config && error.response
-    //     && +error.response.status === 400
-    //     && error.config.url === '/api/v1/auth/refresh'
-    // ) {
-    //     if (
-    //         window.location.pathname !== '/'
-    //         && !window.location.pathname.startsWith('/book')
-    //     ) {
-    //         window.location.href = '/login';
-    //     } else console.log('sss')
-    // }
+    //refresh token expired
+    if (
+        error.config && error.response
+        && +error.response.status === 400
+        && error.config.url === '/api/v1/auth/refresh'
+    ) {
+        if (
+            window.location.pathname !== '/'
+        ) {
+            window.location.href = '/login';
+        } else console.log('sss')
+    }
 
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error

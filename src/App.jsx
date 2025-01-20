@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useEffect, useState } from 'react';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import Header from './components/header/header';
 import Footer from './components/footer/footer';
@@ -12,7 +13,9 @@ import ProductDetail from './pages/ProductDetail/ProductDetail';
 import ContactPage from './pages/Contact/Contact';
 import NotFoundPage from './pages/Error/NotFoundPage/NotFound';
 import AboutPage from './pages/About/About';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { doGetAccountAction } from './redux/account/accountSlice';
+import { getAccountAPI } from './utils/AuthAPI';
 
 const Layout = () => {
   return (
@@ -68,7 +71,24 @@ const router = createBrowserRouter([
 
 
 export default function App() {
+  const dispatch = useDispatch()
 
+  const getAccount = async () => {
+
+    if (window.location.pathname == '/register' ||
+      window.location.pathname == '/login') return
+    const response = await getAccountAPI();
+    console.log(response);
+
+    if (response && response.data) {
+      dispatch(doGetAccountAction(response.data))
+    }
+  }
+
+  useEffect(() => {
+    getAccount()
+
+  }, [])
 
   return (
     <>
