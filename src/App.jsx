@@ -7,6 +7,8 @@ import OrderPage from './pages/order';
 import HomePage from './pages/HomePage/HomePage';
 import './styles/global.css'
 import HomeAdminPage from './pages/admin/home';
+import ProductAdminPage from './pages/admin/product/manage';
+import UserAdminPage from './pages/admin/user/manage';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import ProductDetail from './pages/ProductDetail/ProductDetail';
@@ -58,6 +60,14 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <HomeAdminPage />
+  },
+  {
+    path: "/productadmin",
+    element: <ProductAdminPage />
+  },
+  {
+    path: "/useradmin",
+    element: <UserAdminPage />
   },
   {
     path: "/register",
