@@ -1,11 +1,16 @@
 import React from "react";
-import { Form, Input, Button, Row, Col, Card } from "antd";
+import { Form, Input, Button, Row, Col, Card, notification } from "antd";
 import { PhoneOutlined, MailOutlined, HomeOutlined } from "@ant-design/icons";
 import "./Contact.css"; // File CSS tùy chỉnh
+import { useForm } from "antd/es/form/Form";
 
 const ContactPage = () => {
+    const [form] = useForm()
     const onFinish = (values) => {
-        console.log("Form submitted:", values);
+        notification.success({
+            message: "Send email success"
+        })
+        form.resetFields()
     };
 
     return (
@@ -15,7 +20,7 @@ const ContactPage = () => {
                 {/* Form liên hệ */}
                 <Col xs={24} md={12}>
                     <Card bordered={false} className="contact-form-card">
-                        <Form layout="vertical" onFinish={onFinish}>
+                        <Form layout="vertical" onFinish={onFinish} form={form}>
                             <Form.Item name="name" label="Họ và Tên" rules={[{ required: true, message: "Vui lòng nhập họ tên!" }]}>
                                 <Input placeholder="Nhập họ và tên" />
                             </Form.Item>
@@ -24,7 +29,7 @@ const ContactPage = () => {
                                 <Input placeholder="Nhập email" />
                             </Form.Item>
 
-                            <Form.Item name="phone" label="Số điện thoại" rules={[{ required: true, message: "Vui lòng nhập số điện thoại!" }]}>
+                            <Form.Item name="phone" label="Số điện thoại" rules={[{ required: true, message: "Vui lòng nhập số điện thoại!" }, { pattern: /^(0[3|5|7|8|9])([0-9]{8})$/, message: "Chỉ gồm số" }]}>
                                 <Input placeholder="Nhập số điện thoại" />
                             </Form.Item>
 
@@ -44,7 +49,7 @@ const ContactPage = () => {
                     <Card bordered={false} className="contact-info-card">
                         <p><PhoneOutlined /> Số điện thoại: 0987 654 321</p>
                         <p><MailOutlined /> Email: MrTeo@support.com</p>
-                        <p><HomeOutlined /> Địa chỉ: 123 Đường Lý Thường Kiệt, Quận Hai Bà Trưng, Web Dev Studio</p>
+                        <p><HomeOutlined /> Địa chỉ: 123 Đường Lý Thường Kiệt, Web Dev Studio</p>
                     </Card>
 
                     {/* Bản đồ Google Maps */}

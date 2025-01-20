@@ -3,7 +3,7 @@ import { Card, Rate, Button } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 
 const ProductCard = ({ product }) => {
-  const { image, name, price, rating } = product;
+  const { images, name, price, brand } = product;
 
   return (
     <Card
@@ -11,8 +11,8 @@ const ProductCard = ({ product }) => {
       cover={
         <img
           alt={name}
-          src={image}
-          style={{ height: "214px", objectFit: "cover" }}
+          src={images[0]}
+          style={{ height: "214px", objectFit: "contain" }}
         />
       }
       style={{
@@ -25,32 +25,25 @@ const ProductCard = ({ product }) => {
     >
       {/* Tên sản phẩm*/}
       <div>
-        <span style={{ fontWeight: "inherit" }}>{name}</span>
+        <h4>{name}</h4>
+      </div>
+      <div>
+        <b style={{ fontWeight: "inherit", color: "#888888" }}>{brand}</b>
       </div>
 
       {/* Giá sản phẩm */}
       <div
         style={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "center",
           alignItems: "center",
-          fontSize: "16px",
+          fontSize: "25px",
           fontWeight: "bold",
           margin: "10px 0",
           color: "#000",
         }}
       >
         {price.toLocaleString("vi-VN")}đ
-        <span style={{ display: "flex", alignItems: "center" }}>
-          {rating}{" "}
-          <Rate
-            disabled
-            allowHalf
-            defaultValue={rating}
-            count={1}
-            style={{ marginLeft: 4 }}
-          />
-        </span>
       </div>
 
       {/* Nút thêm vào giỏ hàng */}

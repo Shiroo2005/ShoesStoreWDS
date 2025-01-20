@@ -3,6 +3,8 @@ import Filter from "../../components/home/Filter";
 import ProductCard from "../../components/home/ProductCard";
 import OrangeButton from "../../components/share/OrangeButton";
 import { LuArrowDownUp, LuLayoutGrid, LuLayoutList } from "react-icons/lu";
+import { getAllProductsAPI } from "../../utils/ProductAPI";
+import { useEffect, useState } from "react";
 
 const { Sider, Content } = Layout;
 const { Search } = Input;
@@ -18,16 +20,6 @@ const HomePage = () => {
     {
       key: "1",
       label: "Liên quan",
-      children: "",
-    },
-    {
-      key: "2",
-      label: "Mới nhất",
-      children: "",
-    },
-    {
-      key: "3",
-      label: "Bán chạy",
       children: "",
     },
     {
@@ -59,32 +51,20 @@ const HomePage = () => {
     },
   ];
 
-  const productData = [
-    {
-      image: "./img/product.png",
-      name: "Tên giày",
-      price: 990000,
-      rating: 4.5,
-    },
-    {
-      image: "./img/product.png",
-      name: "Tên giày",
-      price: 990000,
-      rating: 4.5,
-    },
-    {
-      image: "./img/product.png",
-      name: "Tên giày",
-      price: 990000,
-      rating: 4.5,
-    },
-    {
-      image: "./img/product.png",
-      name: "Tên giày",
-      price: 990000,
-      rating: 4.5,
-    },
-  ];
+
+
+  const [products, setProducts] = useState([])
+
+  const getAllProducts = async () => {
+    const result = await getAllProductsAPI()
+    console.log(result);
+    setProducts(result.data)
+
+  }
+
+  useEffect(() => {
+    getAllProducts()
+  }, [])
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -167,7 +147,7 @@ const HomePage = () => {
                 justifyContent: "space-between",
               }}
             >
-              {productData.map((product, index) => (
+              {products.map((product, index) => (
                 <ProductCard key={index} product={product} />
               ))}
             </div>
