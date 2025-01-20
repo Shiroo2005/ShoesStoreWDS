@@ -7,9 +7,9 @@ import OrderPage from './pages/order';
 import HomePage from './pages/HomePage/HomePage';
 import './styles/global.css'
 import HomeAdminPage from './pages/admin/home';
-import LoginPage from './pages/Login';
-import RegisterPage from './pages/Register';
-
+import LoginPage from './pages/login';
+import RegisterPage from './pages/register';
+import Productpage from './pages/admin/product/manage'
 
 const Layout = () => {
   return (
@@ -44,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <HomeAdminPage />
+  },
+  {
+    path: "/product",
+    element: <Productpage />
   },
   {
     path: "/register",
