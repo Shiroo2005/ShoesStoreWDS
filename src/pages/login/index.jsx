@@ -25,10 +25,12 @@ const LoginPage = () => {
             }
             )
             navigate('/')
-            // if (values.RememberMe) {
-            //     localStorage.setItem("access_token", result.accesstoken),
-            //     localStorage.setItem("refresh_token", result.refreshtoken)
-            // }
+
+            console.log(result);
+
+
+            localStorage.setItem("access_token", result.accesstoken),
+                localStorage.setItem("refresh_token", result.refreshtoken)
         }
 
 

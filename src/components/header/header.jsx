@@ -4,8 +4,11 @@ import "./header.css";
 import HomePage from "../../pages/HomePage/HomePage";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const user = useSelector(state => state.account.user)
+
   const navigate = useNavigate()
   const param = useParams()
 
@@ -13,14 +16,6 @@ const Header = () => {
     {
       label: 'Trang chủ',
       key: '/'
-    },
-    {
-      key: '/product',
-      label: 'Bộ sưu tập'
-    },
-    {
-      key: '/notification',
-      label: 'Thông báo'
     },
     {
       key: '/about',
@@ -50,7 +45,9 @@ const Header = () => {
 
       {/* Icons */}
       <div className="icons">
-        <UserOutlined className="icon" />
+        <div>
+          <span>Hello, <a href="#">{user.userName} </a></span>
+        </div>
         <ShoppingCartOutlined className="icon" />
       </div>
     </div>

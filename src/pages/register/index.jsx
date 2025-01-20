@@ -30,6 +30,7 @@ const RegisterPage = () => {
                 description: result?.data?.message
             })
         } else {
+
             notification.success({
                 message: "Tạo mới tài khoản thành công"
             })

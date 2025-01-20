@@ -10,3 +10,9 @@ export const login = async (payload) => {
     return await axios.post('/auth/login', payload)
 
 }
+
+export const getAccountAPI = async () => {
+    const URL_BACKEND = '/auth/account'
+
+    return axios.get(URL_BACKEND)
+}
