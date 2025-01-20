@@ -2,7 +2,6 @@ import { Layout, Menu, Typography } from "antd";
 import { HomeOutlined, UserOutlined, ShoppingOutlined, DollarOutlined } from "@ant-design/icons";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 
 const { Sider } = Layout;
 const { Title } = Typography;
@@ -10,10 +9,6 @@ const { Title } = Typography;
 
 const Sidebar = () => {
   const nav = useNavigate()
-  const [activeMenu, setActiveMenu] = useState('/');
-  useEffect(() => {
-
-  })
 
   const menuItems = [
     { key: "/", icon: <HomeOutlined />, label: "TRANG CHỦ" },
@@ -36,13 +31,13 @@ const Sidebar = () => {
       </div>
       <Menu
         mode="inline"
-        defaultSelectedKeys={[activeMenu]}
+        defaultSelectedKeys={["1"]}
         items={menuItems.map(item => ({
           ...item,
           className: "menu-item"
         }))}
         className="menu"
-        onClick={(e) => { nav(`/admin${e.key}`); setActiveMenu(e.key); }
+        onClick={(e) => nav(`/admin${e.key}`)
         }
       />
     </Sider>

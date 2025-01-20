@@ -18,8 +18,11 @@ import AboutPage from './pages/About/About';
 import { useDispatch, useSelector } from 'react-redux';
 import { doGetAccountAction } from './redux/account/accountSlice';
 import { getAccountAPI } from './utils/AuthAPI';
+import Sidebar from './components/admin/Sidebar/Sidebar';
+import AdminHeader from './components/admin/headeradmin/AdminHeader';
+import { Layout } from 'antd';
 
-const Layout = () => {
+const LayoutUser = () => {
   return (
     <>
       <Header />
@@ -29,10 +32,24 @@ const Layout = () => {
   )
 }
 
+const LayoutAdmin = () => {
+  return (
+    <Layout style={{ minHeight: '100vh' }}>
+      <Sidebar />
+      <Layout>
+        <AdminHeader />
+        <Layout.Content style={{ background: '#f0f2f5' }}>
+          <Outlet />
+        </Layout.Content>
+      </Layout>
+    </Layout>
+  )
+}
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <LayoutUser />,
     errorElement: <NotFoundPage />,
     children: [
       {
@@ -59,15 +76,21 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <HomeAdminPage />
-  },
-  {
-    path: "/productadmin",
-    element: <ProductAdminPage />
-  },
-  {
-    path: "/useradmin",
-    element: <UserAdminPage />
+    element: <LayoutAdmin />,
+    children: [
+      {
+        index: true,
+        element: <HomeAdminPage />
+      },
+      {
+        path: 'products',
+        element: <ProductAdminPage />
+      },
+      {
+        path: 'users',
+        element: <UserAdminPage />
+      },
+    ],
   },
   {
     path: "/register",
