@@ -1,70 +1,61 @@
-import React from "react";
-import { Table, Button } from "antd";
-import "./index.css";
+import React, { useState } from "react";
+import { Button, message } from "antd";
+import CreateModal from "./CreateModal";
+import ProductTable from "./ProductTable";
+import { productData } from "./data";
 
-const App = () => {
-  const dataSource = [
-    {
-      key: "1",
-      code: "#1",
-      name: "Giày cool ngầu (đen)",
-      price: "799.000 Đ",
-      status: "Đã lên kệ",
-    },
-    {
-      key: "2",
-      code: "#2",
-      name: "Giày thể thao (trắng)",
-      price: "799.000 Đ",
-      status: "Chưa lên kệ",
-    },
-    {
-      key: "3",
-      code: "#3",
-      name: "Giày thể thao (đen)",
-      price: "799.000 Đ",
-      status: "Đã lên kệ",
-    },
-  ];
+const ProductManagement = () => {
+  const [data, setData] = useState(productData);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(null);
 
-  const columns = [
-    {
-      title: "Mã sản phẩm",
-      dataIndex: "code",
-      key: "code",
-    },
-    {
-      title: "Tên sản phẩm",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Giá tiền",
-      dataIndex: "price",
-      key: "price",
-    },
-    {
-      title: "",
-      key: "edit",
-      render: () => <Button>Chỉnh sửa</Button>,
-    },
-    {
-      title: "",
-      key: "delete",
-      render: () => (
-        <Button danger>Xoá</Button>
-      ),
-    },
-  ];
+  const handleAdd = (product) => {
+    if (!product.name || !product.price) {
+      message.error("Vui lòng nhập đầy đủ thông tin sản phẩm!");
+      return;
+    }
+    product.code = data.length + 1;
+    setData([...data, { ...product, key: `${data.length + 1}` }]);
+  };
+
+  const handleEdit = (product) => {
+    setEditingProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const handleSaveEdit = (editedProduct) => {
+    const updatedData = data.map((item) =>
+      item.key === editedProduct.key ? { ...item, ...editedProduct } : item
+    );
+    setData(updatedData);
+    setIsModalOpen(false);
+  };
+
+  const handleDelete = (key) => {
+    setData(data.filter((item) => item.key !== key));
+  };
 
   return (
-    <div className="container">
+    <div className="product-management">
       <div className="actions">
-        <Button type="primary">Thêm mới</Button>
+        <Button type="primary" onClick={() => setIsModalOpen(true)}>
+          Thêm mới
+        </Button>
       </div>
-      <Table dataSource={dataSource} columns={columns} pagination={false} />
+      <ProductTable
+        data={data}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
+      <CreateModal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleAdd}
+        onEdit={handleSaveEdit}
+        editingProduct={editingProduct}
+      />
     </div>
   );
 };
 
-export default App;
+export default ProductManagement;
