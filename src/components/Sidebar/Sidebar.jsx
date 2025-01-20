@@ -1,22 +1,33 @@
 import { Layout, Menu, Typography } from "antd";
 import { HomeOutlined, UserOutlined, ShoppingOutlined, DollarOutlined } from "@ant-design/icons";
-import "./index.css"; 
+import "./index.css";
+import { useNavigate } from "react-router-dom";
 
 const { Sider } = Layout;
 const { Title } = Typography;
 
+
 const Sidebar = () => {
+  const nav = useNavigate()
+
   const menuItems = [
-    { key: "1", icon: <HomeOutlined />, label: "TRANG CHỦ" },
-    { key: "2", icon: <UserOutlined />, label: "KHÁCH HÀNG" },
-    { key: "3", icon: <ShoppingOutlined />, label: "SẢN PHẨM" },
-    { key: "4", icon: <DollarOutlined />, label: "ĐƠN HÀNG" },
+    { key: "/", icon: <HomeOutlined />, label: "TRANG CHỦ" },
+    { key: "/users", icon: <UserOutlined />, label: "KHÁCH HÀNG" },
+    { key: "/products", icon: <ShoppingOutlined />, label: "SẢN PHẨM" },
   ];
 
   return (
     <Sider width={200} className="sidebar">
       <div className="logoweb">
-        <Title level={4} className="logoweb">WDSHOE</Title>
+        <Title
+          level={4}
+          className="logoweb"
+          style={{ cursor: "pointer" }}
+          onClick={() => nav('/')}
+        >
+          WDSHOE
+        </Title>
+
       </div>
       <Menu
         mode="inline"
@@ -26,6 +37,8 @@ const Sidebar = () => {
           className: "menu-item"
         }))}
         className="menu"
+        onClick={(e) => nav(`/admin${e.key}`)
+        }
       />
     </Sider>
   );
