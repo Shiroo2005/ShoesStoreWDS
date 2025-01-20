@@ -40,23 +40,35 @@ const Header = () => {
 
   const settings = [
     {
-      label:
+      label: (
         <a href="#" rel="noopener noreferrer">
           Setting
         </a>
-      ,
+      ),
       key: '0',
     },
+    ...(user.role == 'Admin'
+      ? [
+        {
+          label: (
+            <a href="/admin" rel="noopener noreferrer">
+              Trang quản trị
+            </a>
+          ),
+          key: '3',
+        },
+      ]
+      : []),
     {
-      label:
+      label: (
         <a onClick={handleLogout} rel="noopener noreferrer">
           Logout
         </a>
-      ,
+      ),
       key: '1',
     },
+  ];
 
-  ]
 
   return (
     <div className="app-header">

@@ -5,6 +5,7 @@ import OrangeButton from "../../components/share/OrangeButton";
 import { LuArrowDownUp, LuLayoutGrid, LuLayoutList } from "react-icons/lu";
 import { getAllProductsAPI } from "../../utils/ProductAPI";
 import { useEffect, useState } from "react";
+import ProductDetail from "../ProductDetail/ProductDetail";
 
 const { Sider, Content } = Layout;
 const { Search } = Input;
@@ -67,95 +68,97 @@ const HomePage = () => {
   }, [])
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      {/* Sidebar */}
-      <Sider
-        width={510}
-        style={{ background: "#f0f0f0", padding: "60px 66px" }}
-      >
-        <h2
-          className="filter-title"
-          style={{
-            textAlign: "center",
-            fontSize: "24px",
-            marginBottom: "20px",
-          }}
+    <>
+      <Layout style={{ minHeight: "100vh" }}>
+        {/* Sidebar */}
+        <Sider
+          width={510}
+          style={{ background: "#f0f0f0", padding: "60px 66px" }}
         >
-          Bộ lọc
-        </h2>
-        <Filter></Filter>
-        <OrangeButton label={"Hoàn tất"}></OrangeButton>
-        <Button
-          style={{
-            fontSize: "20px",
-            width: "100%",
-            height: "50px",
-            background: "#f0f0f0",
-            marginTop: "10px",
-          }}
-        >
-          Xóa tất cả
-        </Button>
-      </Sider>
+          <h2
+            className="filter-title"
+            style={{
+              textAlign: "center",
+              fontSize: "24px",
+              marginBottom: "20px",
+            }}
+          >
+            Bộ lọc
+          </h2>
+          <Filter></Filter>
+          <OrangeButton label={"Hoàn tất"}></OrangeButton>
+          <Button
+            style={{
+              fontSize: "20px",
+              width: "100%",
+              height: "50px",
+              background: "#f0f0f0",
+              marginTop: "10px",
+            }}
+          >
+            Xóa tất cả
+          </Button>
+        </Sider>
 
-      {/* Main Content */}
-      <Content style={{ background: "#f0f0f0", padding: "60px 66px" }}>
-        {/* Banner */}
-        <Row style={{ marginBottom: "22px" }}>
-          <Col span={24}>
-            <Image src="./img/HomePage-Banner.png" alt="Banner"></Image>
-          </Col>
-        </Row>
+        {/* Main Content */}
+        <Content style={{ background: "#f0f0f0", padding: "60px 66px" }}>
+          {/* Banner */}
+          <Row style={{ marginBottom: "22px" }}>
+            <Col span={24}>
+              <Image src="./img/HomePage-Banner.png" alt="Banner"></Image>
+            </Col>
+          </Row>
 
-        {/* Search Bar and Category */}
-        <Row style={{ marginBottom: "22px" }} gutter={16}>
-          <Col span={11}>
-            <Search
-              placeholder="Tìm kiếm sản phẩm"
-              allowClear
-              onSearch={onSearch}
-              size="large"
-              style={{
-                width: "100%",
-              }}
-            />
-          </Col>
+          {/* Search Bar and Category */}
+          <Row style={{ marginBottom: "22px" }} gutter={16}>
+            <Col span={11}>
+              <Search
+                placeholder="Tìm kiếm sản phẩm"
+                allowClear
+                onSearch={onSearch}
+                size="large"
+                style={{
+                  width: "100%",
+                }}
+              />
+            </Col>
 
-          <Col span={13}>
-            <Tabs
-              defaultActiveKey="1"
-              items={items}
-              type="card"
-              onChange={onChangeTabs}
-              size="middle"
-            />
-          </Col>
-        </Row>
+            <Col span={13}>
+              <Tabs
+                defaultActiveKey="1"
+                items={items}
+                type="card"
+                onChange={onChangeTabs}
+                size="middle"
+              />
+            </Col>
+          </Row>
 
-        {/* Product List */}
-        <Row
-          style={{
-            background: "#fff",
-            boxShadow: "10px 10px 20px rgba(0, 0, 0, 0.2)",
-          }}
-        >
-          <Col span={24} style={{ padding: "50px 70px" }}>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "space-between",
-              }}
-            >
-              {products.map((product, index) => (
-                <ProductCard key={index} product={product} />
-              ))}
-            </div>
-            <Pagination align="center" defaultCurrent={1} total={50} />
-          </Col>
-        </Row>
-      </Content>
-    </Layout>
+          {/* Product List */}
+          <Row
+            style={{
+              background: "#fff",
+              boxShadow: "10px 10px 20px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            <Col span={24} style={{ padding: "50px 70px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "space-between",
+                }}
+              >
+                {products.map((product, index) => (
+                  <ProductCard key={index} product={product} />
+                ))}
+              </div>
+              <Pagination align="center" defaultCurrent={1} total={50} />
+            </Col>
+          </Row>
+        </Content>
+      </Layout>
+    </>
   );
 };
 

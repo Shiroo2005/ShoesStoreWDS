@@ -1,57 +1,60 @@
-import React, { useState } from "react";
-import { Row, Col, Button, Select, InputNumber, Card, Radio, Tabs } from "antd";
+import React, { useEffect, useState } from "react";
+import { Row, Col, Button, Select, InputNumber, Card } from "antd";
 import { ShoppingCartOutlined, HeartOutlined } from "@ant-design/icons";
 import "./ProductDetail.css"; // File CSS tùy chỉnh
+import { useParams } from "react-router-dom";
+import { getProductDetailAPI } from "../../utils/ProductAPI";
 
 const { Option } = Select;
 
 const ProductDetail = () => {
-    const [color, setColor] = useState("blue");
+    const [product, setProduct] = useState({})
     const [size, setSize] = useState("XS");
     const [quantity, setQuantity] = useState(1);
-    const items = [
-        {
-            key: '1',
-            label: 'Mô tả',
-            children: <p>Product Description</p>
-        },
-    ];
+    const { id } = useParams()
+
+    const getDetailProduct = async () => {
+        const result = await getProductDetailAPI(id)
+        console.log(result);
+        setProduct(result.data)
+    }
+
+    useEffect(() => {
+        console.log(id);
+        getDetailProduct()
+    }, [])
 
     return (
-        <div className="product-detail-container">
+        product.name ? <div className="product-detail-container">
             <Row gutter={[32, 32]}>
                 {/* Hình ảnh sản phẩm */}
                 <Col xs={24} md={12}>
                     <Card bordered={false} className="product-image-card">
                         <img
-                            src="https://via.placeholder.com/500" // Thay bằng ảnh sản phẩm
+                            src={product.images[0].fileName} // Thay bằng ảnh sản phẩm
                             alt="Shoe"
                             className="product-image"
                         />
                     </Card>
+
+                    {/* Danh sách hình ảnh thu nhỏ */}
                     <div className="product-thumbnails">
-                        <img src="https://via.placeholder.com/100" alt="thumb1" />
-                        <img src="https://via.placeholder.com/100" alt="thumb2" />
-                        <img src="https://via.placeholder.com/100" alt="thumb3" />
+                        {product.images.map((image, index) => (
+                            <img
+                                key={index}
+                                src={image.fileName}
+                                alt={`thumb${index + 1}`}
+                                className="product-thumbnail"
+                            />
+                        ))}
                     </div>
                 </Col>
 
                 {/* Thông tin sản phẩm */}
                 <Col xs={24} md={12}>
-                    <h2 className="product-title">Tên giày</h2>
-                    <h3 className="product-price">990.000đ</h3>
+                    <h2 className="product-title">{product.name}</h2>
+                    <h3 className="product-price">{product.price.toLocaleString("vi-VN")}đ</h3>
                     <hr />
-
-                    {/* Chọn màu sắc */}
-                    <div className="product-option">
-                        <p>Màu sắc:</p>
-                        <Radio.Group value={color} onChange={(e) => setColor(e.target.value)}>
-                            <Radio value="blue">🔵</Radio>
-                            <Radio value="red">🔴</Radio>
-                            <Radio value="black">⚫</Radio>
-                            <Radio value="yellow">🟡</Radio>
-                        </Radio.Group>
-                    </div>
 
                     {/* Chọn kích thước */}
                     <div className="product-option">
@@ -78,11 +81,9 @@ const ProductDetail = () => {
                     <Row gutter={16}>
                         <Col span={16}>
                             {/* Nút thêm vào giỏ hàng */}
-                            <Button type="primary" icon={<ShoppingCartOutlined />} className="add-to-cart">
+                            <Button style={{ width: "100%" }} type="primary" icon={<ShoppingCartOutlined />} className="add-to-cart">
                                 Thêm vào giỏ hàng
                             </Button>
-
-
                         </Col>
                         <Col span={8}>
                             {/* Nút yêu thích */}
@@ -94,9 +95,8 @@ const ProductDetail = () => {
                     <p className="shipping-info">🚚 Giao hàng trong vòng 5 ngày</p>
                 </Col>
             </Row>
-            <Tabs defaultActiveKey="1" items={items} />
-
         </div>
+            : <></>
     );
 };
 

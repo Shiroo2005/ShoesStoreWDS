@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 import { Card, Rate, Button } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
-  const { images, name, price, brand } = product;
-
+  const { id, images, name, price, brand } = product;
+  const nav = useNavigate()
   return (
     <Card
       hoverable
@@ -21,6 +22,10 @@ const ProductCard = ({ product }) => {
         overflow: "hidden",
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
         marginBottom: "50px",
+      }}
+      onClick={(e) => {
+        nav(`/products/${id}`)
+
       }}
     >
       {/* Tên sản phẩm*/}
