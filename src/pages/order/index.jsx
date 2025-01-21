@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Layout } from "antd";
+import { Layout, notification } from "antd";
 import { OrderHeader } from "./OrderHeader";
 import { ShippingOptions } from "./ShippingOptions";
 import { OrderSummary } from "./OrderSummary";
-import { getCartAPI } from "../../utils/ProductAPI";
+import { deleteProductInCartAPI, getCartAPI } from "../../utils/ProductAPI";
 import { useSelector } from "react-redux";
 import { OrderTable } from "./OrderTable";
 import { convertToOrderTableData } from "../../utils/Converter";
@@ -15,7 +15,6 @@ export default function OrderPage() {
     const [selectedKeys, setSelectedKeys] = useState([]); // Lưu các `key` đã chọn
     const getCart = async () => {
         const result = await getCartAPI()
-        if (result || !result) console.log(convertToOrderTableData(result.data));
 
         setData(convertToOrderTableData(result.data))
         if (data || !data) console.log(data, result.data);
@@ -36,8 +35,16 @@ export default function OrderPage() {
         }
     };
 
-    const handleRemove = (key) => {
+    const handleRemove = async (key) => {
         setData(data.filter((item) => item.key !== key));
+        const result = await deleteProductInCartAPI(key)
+        if (result.message) notification.success({
+            message: "Remove success",
+        })
+        else notification.error({
+            message: "Remove failed",
+        })
+
     };
 
     // Tính tổng giá trị các mục đã chọn

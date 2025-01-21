@@ -7,7 +7,6 @@ const instance = axios.create({
     withCredentials: true
 })
 
-instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` }
 
 const handleRefresh = async () => {
     const response = await instance.post('/api/accesstoken')
@@ -17,9 +16,12 @@ const handleRefresh = async () => {
     } else return null
 
 }
+instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` }
 
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
+    instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` }
+
     // Do something before request is sent
     return config;
 }, function (error) {
@@ -35,18 +37,22 @@ instance.interceptors.response.use(function (response) {
     // Do something with response data
     return response?.data
 }, async function (error) {
+    instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` }
 
-    // // access token expired
-    // if (error.status == 401) {
-    //     const access_token = await handleRefresh()
-    //     error.config.headers[NO_RETRY_HEADER] = 'true'
-    //     if (access_token) {
-    //         localStorage.setItem("access_token", access_token)
+    console.log(error, error.config.headers[NO_RETRY_HEADER]);
 
-    //         error.config.headers['Authorization'] = `Bearer ${access_token} `
-    //         return axios.request(error.config)
-    //     }
-    // }
+
+    // access token expired
+    if (error.status == 401 && error.config.headers[NO_RETRY_HEADER] == 'false') {
+        const access_token = await handleRefresh()
+        error.config.headers[NO_RETRY_HEADER] = 'true'
+        if (access_token) {
+            localStorage.setItem("access_token", access_token)
+
+            error.config.headers['Authorization'] = `Bearer ${access_token} `
+            return axios.request(error.config)
+        }
+    }
 
     // //refresh token expired
     // if (

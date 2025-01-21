@@ -15,3 +15,8 @@ export const addToCartAPI = async (payload) => {
 export const getCartAPI = async (id) => {
     return await axios.get(`/cart`)
 }
+
+export const deleteProductInCartAPI = async (id) => {
+    const payload = { id: id }
+    return await axios.delete('/cart', payload)
+}

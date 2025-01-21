@@ -104,27 +104,8 @@ const HomePage = () => {
 
           {/* Search Bar and Category */}
           <Row style={{ marginBottom: "22px" }} gutter={16}>
-            <Col span={11}>
-              <Search
-                placeholder="Tìm kiếm sản phẩm"
-                allowClear
-                onSearch={onSearch}
-                size="large"
-                style={{
-                  width: "100%",
-                }}
-              />
-            </Col>
 
-            <Col span={13}>
-              <Tabs
-                defaultActiveKey="1"
-                items={items}
-                type="card"
-                onChange={onChangeTabs}
-                size="middle"
-              />
-            </Col>
+
           </Row>
 
           {/* Product List */}

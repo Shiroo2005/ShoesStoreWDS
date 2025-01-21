@@ -33,9 +33,22 @@ const ProductDetail = () => {
         console.log(payload);
 
         const result = await addToCartAPI(payload)
-        if (result.message) notification.success({
-            message: "Add to cart success",
-        })
+        if (result.message) {
+            notification.success({
+                message: "Add to cart success",
+            })
+            setSize()
+        }
+        else {
+            if (result.status == 401) notification.error({
+                message: "Vui lòng đăng nhập"
+            })
+            else
+                notification.error({
+                    message: "Vui lòng chọn kích thước"
+                })
+
+        }
 
     }
 

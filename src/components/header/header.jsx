@@ -20,6 +20,7 @@ const Header = () => {
       message.success(result.message)
       navigate('/login')
       dispatch(doLogoutAction())
+      localStorage.removeItem("access_token")
     }
   }
 
