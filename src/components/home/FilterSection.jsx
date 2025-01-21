@@ -8,16 +8,19 @@ const FilterSection = (props) => {
   const { title, options, nameQuery, setQueryBrand, queryBrand, queryCategory, setQueryCategory } = props
   const onChange = (checkedValues) => {
     setSelectedOptions(checkedValues);
-    console.log(`Checked ${nameQuery} values:`, checkedValues);
 
+    console.log(`Checked ${nameQuery} values:`, checkedValues);
     if (nameQuery == 'CategoryId') setQueryCategory(checkedValues)
     else setQueryBrand(checkedValues)
+    console.log(queryBrand, 1);
 
 
   };
 
   const handleClear = () => {
     setSelectedOptions([]);
+    if (nameQuery == 'CategoryId') setQueryCategory([])
+    else setQueryBrand([])
     console.log("Cleared all selections");
   };
 
@@ -32,7 +35,11 @@ const FilterSection = (props) => {
         title={
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <span>{title}</span>
-            <DeleteOutlined onClick={handleClear} />
+            <space onClick={handleClear} style={{ cursor: 'pointer' }}>
+
+              <DeleteOutlined />
+              <b>Hoàn tác</b>
+            </space>
           </div>
         }
         bordered={false}

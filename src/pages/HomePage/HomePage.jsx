@@ -91,17 +91,7 @@ const HomePage = () => {
             Bộ lọc
           </h2>
           <Filter query={query} setQuery={setQuery} />
-          <Button
-            style={{
-              fontSize: "20px",
-              width: "100%",
-              height: "50px",
-              background: "#f0f0f0",
-              marginTop: "10px",
-            }}
-          >
-            Xóa tất cả
-          </Button>
+
         </Sider>
 
         {/* Main Content */}

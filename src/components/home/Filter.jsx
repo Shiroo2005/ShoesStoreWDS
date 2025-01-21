@@ -2,8 +2,10 @@
 import { useEffect, useState } from "react";
 import { getAllCategoriesAPI } from "../../utils/CategoryAPI";
 import FilterSection from "./FilterSection";
+import { Button } from "antd";
 
 const Filter = (props) => {
+  const [isCancel, setIsCancel] = useState(false)
   const [categories, setCategories] = useState([]);
   const [queryCategory, setQueryCategory] = useState('')
   const [queryBrand, setQueryBrand] = useState('')
@@ -46,21 +48,24 @@ const Filter = (props) => {
 
 
   return (
-    <div>
-      {filterData.map((filter, index) => (
-        <FilterSection
-          key={index}
-          title={filter.title}
-          options={filter.options}
-          nameQuery={filter.key}
-          setQueryCategory={setQueryCategory}
-          setQueryBrand={setQueryBrand}
-          queryBrand={queryBrand}
-          queryCategory={queryCategory}
-        />
+    <>
+      <div>
+        {filterData.map((filter, index) => (
+          <FilterSection
+            key={index}
+            title={filter.title}
+            options={filter.options}
+            nameQuery={filter.key}
+            setQueryCategory={setQueryCategory}
+            setQueryBrand={setQueryBrand}
+            queryBrand={queryBrand}
+            queryCategory={queryCategory}
+          />
 
-      ))}
-    </div>
+        ))}
+
+      </div>
+    </>
   );
 };
 

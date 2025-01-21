@@ -21,6 +21,7 @@ import { getAccountAPI } from './utils/AuthAPI';
 import Sidebar from './components/admin/Sidebar/Sidebar';
 import AdminHeader from './components/admin/headeradmin/AdminHeader';
 import { Layout } from 'antd';
+import NotPermitted from './pages/Error/NotPermitted/NotPermitted';
 
 const LayoutUser = () => {
   return (
@@ -33,8 +34,12 @@ const LayoutUser = () => {
 }
 
 const LayoutAdmin = () => {
+  const isAdminRoute = window.location.pathname.startsWith('/admin');
+  const user = useSelector(state => state.account.user);
+  const userRole = user.role;
+
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    (isAdminRoute && userRole == 'Admin') ? <Layout style={{ minHeight: '100vh' }}>
       <Sidebar />
       <Layout>
         <AdminHeader />
@@ -43,6 +48,8 @@ const LayoutAdmin = () => {
         </Layout.Content>
       </Layout>
     </Layout>
+      :
+      <NotPermitted />
   )
 }
 
@@ -77,6 +84,7 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <LayoutAdmin />,
+    errorElement: <NotFoundPage />,
     children: [
       {
         index: true,
