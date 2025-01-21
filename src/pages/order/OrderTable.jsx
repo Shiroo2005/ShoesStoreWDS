@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import { Table, Space, Button, InputNumber } from "antd";
 
@@ -26,7 +27,13 @@ export function OrderTable({ data, onQtyChange, onRemove, selectedKeys, onSelect
             title: "Giá tiền",
             dataIndex: "price",
             key: "price",
-            render: (price) => `€${price.toFixed(2)}`,
+            render: (price) => `${price?.toLocaleString("vi-VN")}đ`,
+        },
+        {
+            title: "Size",
+            dataIndex: "size",
+            key: "size",
+
         },
         {
             title: "Số lượng",
@@ -60,7 +67,7 @@ export function OrderTable({ data, onQtyChange, onRemove, selectedKeys, onSelect
             title: "Thành tiền",
             dataIndex: "total",
             key: "total",
-            render: (total) => `€${total.toFixed(2)}`,
+            render: (total) => `${total?.toLocaleString("vi-VN")}đ`,
         },
         {
             render: (_, record) => (

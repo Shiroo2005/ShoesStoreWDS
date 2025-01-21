@@ -1,16 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout } from "antd";
 import { OrderHeader } from "./OrderHeader";
-import { OrderTable } from "./OrderTable";
 import { ShippingOptions } from "./ShippingOptions";
 import { OrderSummary } from "./OrderSummary";
-import { dataSource } from "./data";
+import { getCartAPI } from "../../utils/ProductAPI";
+import { useSelector } from "react-redux";
+import { OrderTable } from "./OrderTable";
+import { convertToOrderTableData } from "../../utils/Converter";
 
 const { Content } = Layout;
 
 export default function OrderPage() {
-    const [data, setData] = useState(dataSource);
+    const [data, setData] = useState([]);
     const [selectedKeys, setSelectedKeys] = useState([]); // Lưu các `key` đã chọn
+    const getCart = async () => {
+        const result = await getCartAPI()
+        if (result || !result) console.log(convertToOrderTableData(result.data));
+
+        setData(convertToOrderTableData(result.data))
+        if (data || !data) console.log(data, result.data);
+
+    }
+
+    useEffect(() => {
+        getCart()
+    }, [])
 
     const handleQtyChange = (key, value) => {
         const newData = [...data];
@@ -28,8 +42,8 @@ export default function OrderPage() {
 
     // Tính tổng giá trị các mục đã chọn
     const selectedSubtotal = data
-        .filter((item) => selectedKeys.includes(item.key)) // Chỉ tính các mục được chọn
-        .reduce((total, item) => total + item.total, 0);
+        ?.filter((item) => selectedKeys.includes(item.key)) // Chỉ tính các mục được chọn
+        ?.reduce((total, item) => total + item.total, 0);
 
     return (
         <Layout>

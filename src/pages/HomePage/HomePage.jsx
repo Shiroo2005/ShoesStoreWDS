@@ -53,7 +53,6 @@ const HomePage = () => {
   ];
 
   const [current, setCurrent] = useState(1)
-  const [pageSize, setPageSize] = useState(6)
   const [totalPage, setTotalPage] = useState(0)
 
 
@@ -61,7 +60,7 @@ const HomePage = () => {
   const [products, setProducts] = useState([])
 
   const getAllProducts = async () => {
-    const result = await getAllProductsAPI(current)
+    const result = await getAllProductsAPI(current, query)
     console.log(result);
     setProducts(result.data)
     setTotalPage(result.totalPage)

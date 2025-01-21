@@ -11,3 +11,7 @@ export const getProductDetailAPI = async (id) => {
 export const addToCartAPI = async (payload) => {
     return await axios.post('/cart', payload)
 }
+
+export const getCartAPI = async (id) => {
+    return await axios.get(`/cart`)
+}

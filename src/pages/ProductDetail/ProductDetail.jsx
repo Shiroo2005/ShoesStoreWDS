@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Button, Select, InputNumber, Card } from "antd";
+import { Row, Col, Button, Select, InputNumber, Card, notification } from "antd";
 import { ShoppingCartOutlined, HeartOutlined } from "@ant-design/icons";
 import "./ProductDetail.css"; // File CSS tùy chỉnh
 import { useParams } from "react-router-dom";
@@ -30,9 +30,12 @@ const ProductDetail = () => {
         const payload = {
             Id: size
         }
+        console.log(payload);
 
         const result = await addToCartAPI(payload)
-        console.log(result);
+        if (result.message) notification.success({
+            message: "Add to cart success",
+        })
 
     }
 
@@ -43,7 +46,7 @@ const ProductDetail = () => {
                 <Col xs={24} md={12}>
                     <Card bordered={false} className="product-image-card">
                         <img
-                            src={product.images[0].fileName} // Thay bằng ảnh sản phẩm
+                            src={product.images[0]?.fileName} // Thay bằng ảnh sản phẩm
                             alt="Shoe"
                             className="product-image"
                         />
