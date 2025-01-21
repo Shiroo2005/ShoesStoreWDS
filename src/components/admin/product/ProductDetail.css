@@ -1,0 +1,54 @@
+.product-detail {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-info {
+  margin-top: 10px;
+}
+
+.product-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.product-id,.product-size,.product-stock,.product-color,.product-price,.product-brand {
+  font-size: 16px;
+  color: #666;
+  margin: 5px 0;
+}
+
+.product-id::before {
+  content: "Mã sản phẩm: ";
+  font-weight: bold;
+}
+
+.product-size::before {
+  content: "Kích thước: ";
+  font-weight: bold;
+}
+
+.product-stock::before {
+  content: "Số lượng tồn kho: ";
+  font-weight: bold;
+}
+
+.product-color::before {
+  content: "Màu sắc: ";
+  font-weight: bold;
+}
+
+.product-price::before {
+  content: "Giá tiền: ";
+  font-weight: bold;
+}
+
+.product-brand::before {
+  content: "Thương hiệu: ";
+  font-weight: bold;
+}
