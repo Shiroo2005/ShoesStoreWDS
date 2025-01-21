@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Form, Input, InputNumber, Col, Row, UploadProps, UploadFile } from "antd";
+import { Modal, Form, Input, InputNumber, Col, Row, UploadProps, UploadFile, Space, Button } from "antd";
 import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import TextArea from "antd/es/input/TextArea";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 type FileType = Parameters<Required<UploadProps>['beforeUpload']>[0];
 
@@ -108,7 +109,7 @@ const CreateModal = ({ open, onClose, onSubmit, onEdit, editingProduct }) => {
                             </ImgCrop>
                         </Form.Item>
                     </Col>
-                    <Col span={18}>
+                    <Col span={12}>
                         <Row gutter={24}>
                             <Col span={8}>
                                 <Form.Item
@@ -119,15 +120,7 @@ const CreateModal = ({ open, onClose, onSubmit, onEdit, editingProduct }) => {
                                     <Input placeholder="Nhập tên sản phẩm" />
                                 </Form.Item>
                             </Col>
-                            <Col span={8}>
-                                <Form.Item
-                                    label="Số lượng"
-                                    name="qty"
-                                    rules={[{ required: true, message: "Vui lòng nhập số lượng sản phẩm!" }]}
-                                >
-                                    <InputNumber min={1} placeholder="Nhập số lượng" />
-                                </Form.Item>
-                            </Col>
+
                             <Col span={8}>
                                 <Form.Item
                                     label="Giá tiền"
@@ -170,6 +163,43 @@ const CreateModal = ({ open, onClose, onSubmit, onEdit, editingProduct }) => {
                                 <TextArea rows={4} placeholder="Nhập mô tả" />
                             </Form.Item>
                         </Col>
+                    </Col>
+                    <Col span={4}>
+                        <Form.Item label="Số lượng kích thước">
+                            <Form.List
+                                name="size">
+                                {(fields, { add, remove }) => (
+                                    <>
+                                        {fields.map(({ key, name, ...restField }) => (
+                                            <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                                                <Form.Item
+                                                    {...restField}
+                                                    name={[name, 'first']}
+                                                    rules={[{ required: true, message: 'Missing first name' }]}
+                                                >
+                                                    <Input placeholder="Size" />
+                                                </Form.Item>
+                                                <Form.Item
+                                                    {...restField}
+                                                    name={[name, 'last']}
+                                                    rules={[{ required: true, message: 'Missing last name' }]}
+                                                >
+                                                    <Input placeholder="Last Name" />
+                                                </Form.Item>
+                                                <MinusCircleOutlined onClick={() => remove(name)} />
+                                            </Space>
+                                        ))}
+                                        <Form.Item>
+                                            <Button type="dashed"
+                                                style={{ width: '130px', height: '30px' }}
+                                                onClick={() => add()} block icon={<PlusOutlined />}>
+                                                thêm
+                                            </Button>
+                                        </Form.Item>
+                                    </>
+                                )}
+                            </Form.List>
+                        </Form.Item>
                     </Col>
                 </Row>
             </Form>
