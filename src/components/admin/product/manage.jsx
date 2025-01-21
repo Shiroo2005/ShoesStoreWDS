@@ -1,43 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Button, Modal } from "antd";
 import "./index.css";
 import './ProductDetail.css'
+import { getAllProductsAPI, getProductDetailAPI } from "../../../utils/ProductAPI";
 const App = () => {
   const [visible, setVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const dataSource = [
-    {
-      key: "1",
-      id: "#1",
-      name: "Giày cool ngầu (đen)",
-      price: "799.000 Đ",
-      brand: "Brand A",
-      size: "42",
-      stock: 10,
-      color: "Đen",
-    },
-    {
-      key: "2",
-      id: "#2",
-      name: "Giày thể thao (trắng)",
-      price: "799.000 Đ",
-      brand: "Brand B",
-      size: "40",
-      stock: 5,
-      color: "Trắng",
-    },
-    {
-      key: "3",
-      id: "#3",
-      name: "Giày thể thao (đen)",
-      price: "799.000 Đ",
-      brand: "Brand C",
-      size: "41",
-      stock: 8,
-      color: "Đen",
-    },
-  ];
+  const [products, setProducts] = useState([])
+
+  const getAllProducts = async () => {
+    const result = await getAllProductsAPI();
+    console.log(result);
+    setProducts(result.data)
+  }
+
+  const getProductDetail = async (id) => {
+    const result = await getProductDetailAPI(id)
+    console.log(result);
+    setSelectedProduct(result.data)
+  }
+
+  useEffect(() => {
+    getAllProducts()
+  }, [])
 
   const columns = [
     {
@@ -54,6 +40,7 @@ const App = () => {
       title: "Giá tiền",
       dataIndex: "price",
       key: "price",
+      render: (e) => `${e.toLocaleString("vi-VN")}đ`
     },
     {
       title: "Thương hiệu",
@@ -83,6 +70,7 @@ const App = () => {
 
   const handleViewDetail = (record) => {
     setSelectedProduct(record);
+    getProductDetail(record.id)
     setVisible(true);
   };
 
@@ -100,7 +88,7 @@ const App = () => {
         <div className="actions">
           <Button type="primary">Thêm mới</Button>
         </div>
-        <Table dataSource={dataSource} columns={columns} pagination={false} />
+        <Table dataSource={products} columns={columns} pagination={false} />
       </div>
 
       {selectedProduct && (
@@ -119,11 +107,48 @@ const App = () => {
             <div className="product-info">
               <h1 className="product-name">{selectedProduct.name}</h1>
               <p className="product-id">{selectedProduct.id}</p>
-              <p className="product-size">{selectedProduct.size}</p>
-              <p className="product-stock">{selectedProduct.stock}</p>
-              <p className="product-color">{selectedProduct.color}</p>
               <p className="product-price">{selectedProduct.price}</p>
-              <p className="product-brand">{selectedProduct.brand}</p>
+              <Table
+                title={() => (
+                  <div style={{
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                    padding: "10px",
+                    background: "#f0f2f5",
+                    textAlign: "center"
+                  }}>
+                    Bảng chi tiết số lượng
+                  </div>
+                )}
+                dataSource={selectedProduct.details}
+                bordered
+                columns={[
+                  {
+                    title: "Size",
+                    dataIndex: "size",
+                    key: "size",
+                    align: "center",
+                    render: (text) => <span style={{ fontWeight: "bold", color: "#1890ff" }}>{text}</span>
+                  },
+                  {
+                    title: "Số lượng",
+                    dataIndex: "stockQuantity",
+                    key: "quantity",
+                    align: "center",
+                    render: (text) => (
+                      <span style={{
+                        fontWeight: "bold",
+                        color: text > 5 ? "#52c41a" : "#f5222d"  // Xanh nếu nhiều hàng, đỏ nếu ít hàng
+                      }}>
+                        {text}
+                      </span>
+                    )
+                  }
+                ]}
+                pagination={false}
+              />
+
+
             </div>
           </div>
         </Modal>
