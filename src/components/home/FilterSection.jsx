@@ -1,13 +1,19 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Checkbox, Card } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
-const FilterSection = ({ title, options }) => {
+const FilterSection = (props) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
-
+  const { title, options, nameQuery, setQueryBrand, queryBrand, queryCategory, setQueryCategory } = props
   const onChange = (checkedValues) => {
     setSelectedOptions(checkedValues);
-    console.log("Checked values:", checkedValues);
+    console.log(`Checked ${nameQuery} values:`, checkedValues);
+
+    if (nameQuery == 'CategoryId') setQueryCategory(checkedValues)
+    else setQueryBrand(checkedValues)
+
+
   };
 
   const handleClear = () => {

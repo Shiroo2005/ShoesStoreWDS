@@ -12,7 +12,7 @@ const { Search } = Input;
 
 const HomePage = () => {
   const onSearch = (value, _e, info) => console.log(info?.source, value);
-
+  const [query, setQuery] = useState('')
   const onChangeTabs = (key) => {
     console.log(key);
   };
@@ -52,20 +52,25 @@ const HomePage = () => {
     },
   ];
 
+  const [current, setCurrent] = useState(1)
+  const [pageSize, setPageSize] = useState(6)
+  const [totalPage, setTotalPage] = useState(0)
+
 
 
   const [products, setProducts] = useState([])
 
   const getAllProducts = async () => {
-    const result = await getAllProductsAPI()
+    const result = await getAllProductsAPI(current)
     console.log(result);
     setProducts(result.data)
-
+    setTotalPage(result.totalPage)
   }
 
   useEffect(() => {
     getAllProducts()
-  }, [])
+  }, [current, query])
+
 
   return (
     <>
@@ -85,8 +90,7 @@ const HomePage = () => {
           >
             Bộ lọc
           </h2>
-          <Filter></Filter>
-          <OrangeButton label={"Hoàn tất"}></OrangeButton>
+          <Filter query={query} setQuery={setQuery} />
           <Button
             style={{
               fontSize: "20px",
@@ -153,7 +157,13 @@ const HomePage = () => {
                   <ProductCard key={index} product={product} />
                 ))}
               </div>
-              <Pagination align="center" defaultCurrent={1} total={50} />
+              <Pagination align="center"
+                defaultCurrent={1}
+                current={current}
+                total={totalPage}
+                onChange={(page, pageSize) => setCurrent(page)
+                }
+              />
             </Col>
           </Row>
         </Content>

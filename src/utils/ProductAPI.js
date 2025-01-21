@@ -1,7 +1,7 @@
 import axios from './axios-customize'
 
-export const getAllProductsAPI = async () => {
-    return await axios.get('/products')
+export const getAllProductsAPI = async (current, query) => {
+    return await axios.get(`/products?p=${current}&${query}`)
 }
 
 export const getProductDetailAPI = async (id) => {
