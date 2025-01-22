@@ -2,7 +2,7 @@ import { Dropdown, Menu, message, Space } from "antd";
 import { UserOutlined, ShoppingCartOutlined, LoginOutlined, DownOutlined } from "@ant-design/icons";
 import "./header.css";
 import HomePage from "../../pages/HomePage/HomePage";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../utils/AuthAPI";
@@ -20,6 +20,7 @@ const Header = () => {
       message.success(result.message)
       navigate('/login')
       dispatch(doLogoutAction())
+      localStorage.removeItem("access_token")
     }
   }
 
@@ -40,12 +41,7 @@ const Header = () => {
 
   const settings = [
     {
-      label: (
-        <a href="#" rel="noopener noreferrer">
-          Setting
-        </a>
-      ),
-      key: '0',
+
     },
     ...(user.role == 'Admin'
       ? [
@@ -104,7 +100,7 @@ const Header = () => {
               </a>
             </Dropdown>
 
-            <ShoppingCartOutlined className="icon" />
+            <Link to="/order"><ShoppingCartOutlined className="icon" /></Link>
           </>
 
         ) : (

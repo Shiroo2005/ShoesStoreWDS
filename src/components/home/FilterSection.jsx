@@ -1,17 +1,26 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Checkbox, Card } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
-const FilterSection = ({ title, options }) => {
+const FilterSection = (props) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
-
+  const { title, options, nameQuery, setQueryBrand, queryBrand, queryCategory, setQueryCategory } = props
   const onChange = (checkedValues) => {
     setSelectedOptions(checkedValues);
-    console.log("Checked values:", checkedValues);
+
+    console.log(`Checked ${nameQuery} values:`, checkedValues);
+    if (nameQuery == 'CategoryId') setQueryCategory(checkedValues)
+    else setQueryBrand(checkedValues)
+    console.log(queryBrand, 1);
+
+
   };
 
   const handleClear = () => {
     setSelectedOptions([]);
+    if (nameQuery == 'CategoryId') setQueryCategory([])
+    else setQueryBrand([])
     console.log("Cleared all selections");
   };
 
@@ -26,7 +35,11 @@ const FilterSection = ({ title, options }) => {
         title={
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <span>{title}</span>
-            <DeleteOutlined onClick={handleClear} />
+            <space onClick={handleClear} style={{ cursor: 'pointer' }}>
+
+              <DeleteOutlined />
+              <b>Hoàn tác</b>
+            </space>
           </div>
         }
         bordered={false}

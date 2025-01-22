@@ -7,7 +7,7 @@ export const dataSource = [
         qty: 1,
         total: 484.99,
         details: "Color: White // Extra Sport Tire // Battery High 100",
-        image: "https://via.placeholder.com/50", // Placeholder image
+        image: "https://placehold.co/600x400/000000/FFFFFF/png",
     },
     {
         key: "2",
@@ -16,51 +16,51 @@ export const dataSource = [
         qty: 3,
         total: 1469.97,
         details: "Color: Black // Extra Full Tire",
-        image: "https://via.placeholder.com/50", // Placeholder image
+        image: "https://placehold.co/600x400/000000/FFFFFF/png",
     },
     {
-        key: "2",
+        key: "3",
         product: "Ninebot ES2",
         price: 489.99,
         qty: 3,
         total: 1469.97,
         details: "Color: Black // Extra Full Tire",
-        image: "https://via.placeholder.com/50", // Placeholder image
+        image: "https://placehold.co/600x400/000000/FFFFFF/png",
     },
     {
-        key: "2",
+        key: "4",
         product: "Ninebot ES2",
         price: 489.99,
         qty: 3,
         total: 1469.97,
         details: "Color: Black // Extra Full Tire",
-        image: "https://via.placeholder.com/50", // Placeholder image
+        image: "https://placehold.co/600x400/000000/FFFFFF/png",
     },
     {
-        key: "2",
+        key: "5",
         product: "Ninebot ES2",
         price: 489.99,
         qty: 3,
         total: 1469.97,
         details: "Color: Black // Extra Full Tire",
-        image: "https://via.placeholder.com/50", // Placeholder image
+        image: "https://placehold.co/600x400/000000/FFFFFF/png",
     },
     {
-        key: "2",
+        key: "6",
         product: "Ninebot ES2",
         price: 489.99,
         qty: 3,
         total: 1469.97,
         details: "Color: Black // Extra Full Tire",
-        image: "https://via.placeholder.com/50", // Placeholder image
+        image: "https://placehold.co/600x400/000000/FFFFFF/png",
     },
     {
-        key: "2",
+        key: "7",
         product: "Ninebot ES2",
         price: 489.99,
         qty: 3,
         total: 1469.97,
         details: "Color: Black // Extra Full Tire",
-        image: "https://via.placeholder.com/50", // Placeholder image
+        image: "https://placehold.co/600x400/000000/FFFFFF/png",
     },
 ];

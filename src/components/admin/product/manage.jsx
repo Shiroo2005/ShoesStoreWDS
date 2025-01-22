@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import { Table, Button, Modal, message } from "antd";
 import "./index.css";
 import { getAllProductsAPI, getProductDetailAPI } from "../../../utils/ProductAPI";
@@ -7,6 +8,7 @@ const App = () => {
   const [visible, setVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [products, setProducts] = useState([])
 
   const getAllProducts = async () => {
@@ -24,7 +26,6 @@ const App = () => {
   useEffect(() => {
     getAllProducts()
   }, [])
-
 
   const columns = [
     {
@@ -87,7 +88,9 @@ const App = () => {
     <>
       <div className="container">
         <div className="actions">
+
           <Button type="primary" onClick={() => setIsModalOpen(true)}>Thêm mới</Button>
+
         </div>
         <Table dataSource={products} columns={columns} pagination={false} />
       </div>
@@ -108,6 +111,8 @@ const App = () => {
             <div className="product-info">
               <h1 className="product-name">{selectedProduct.name}</h1>
               <p className="product-price">{selectedProduct.price.toLocaleString("vi-VN")}đ</p>
+
+
               <Table
                 title={() => (
                   <div style={{

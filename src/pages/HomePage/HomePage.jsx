@@ -12,7 +12,7 @@ const { Search } = Input;
 
 const HomePage = () => {
   const onSearch = (value, _e, info) => console.log(info?.source, value);
-
+  const [query, setQuery] = useState('')
   const onChangeTabs = (key) => {
     console.log(key);
   };
@@ -52,20 +52,24 @@ const HomePage = () => {
     },
   ];
 
+  const [current, setCurrent] = useState(1)
+  const [totalPage, setTotalPage] = useState(0)
+
 
 
   const [products, setProducts] = useState([])
 
   const getAllProducts = async () => {
-    const result = await getAllProductsAPI()
+    const result = await getAllProductsAPI(current, query)
     console.log(result);
     setProducts(result.data)
-
+    setTotalPage(result.totalPage)
   }
 
   useEffect(() => {
     getAllProducts()
-  }, [])
+  }, [current, query])
+
 
   return (
     <>
@@ -85,19 +89,8 @@ const HomePage = () => {
           >
             Bộ lọc
           </h2>
-          <Filter></Filter>
-          <OrangeButton label={"Hoàn tất"}></OrangeButton>
-          <Button
-            style={{
-              fontSize: "20px",
-              width: "100%",
-              height: "50px",
-              background: "#f0f0f0",
-              marginTop: "10px",
-            }}
-          >
-            Xóa tất cả
-          </Button>
+          <Filter query={query} setQuery={setQuery} />
+
         </Sider>
 
         {/* Main Content */}
@@ -111,27 +104,8 @@ const HomePage = () => {
 
           {/* Search Bar and Category */}
           <Row style={{ marginBottom: "22px" }} gutter={16}>
-            <Col span={11}>
-              <Search
-                placeholder="Tìm kiếm sản phẩm"
-                allowClear
-                onSearch={onSearch}
-                size="large"
-                style={{
-                  width: "100%",
-                }}
-              />
-            </Col>
 
-            <Col span={13}>
-              <Tabs
-                defaultActiveKey="1"
-                items={items}
-                type="card"
-                onChange={onChangeTabs}
-                size="middle"
-              />
-            </Col>
+
           </Row>
 
           {/* Product List */}
@@ -153,7 +127,13 @@ const HomePage = () => {
                   <ProductCard key={index} product={product} />
                 ))}
               </div>
-              <Pagination align="center" defaultCurrent={1} total={50} />
+              <Pagination align="center"
+                defaultCurrent={1}
+                current={current}
+                total={totalPage}
+                onChange={(page, pageSize) => setCurrent(page)
+                }
+              />
             </Col>
           </Row>
         </Content>

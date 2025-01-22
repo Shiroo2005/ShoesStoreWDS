@@ -1,28 +1,56 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Button, Select, InputNumber, Card } from "antd";
+import { Row, Col, Button, Select, InputNumber, Card, notification } from "antd";
 import { ShoppingCartOutlined, HeartOutlined } from "@ant-design/icons";
 import "./ProductDetail.css"; // File CSS tùy chỉnh
 import { useParams } from "react-router-dom";
-import { getProductDetailAPI } from "../../utils/ProductAPI";
+import { addToCartAPI, getProductDetailAPI } from "../../utils/ProductAPI";
 
 const { Option } = Select;
 
 const ProductDetail = () => {
     const [product, setProduct] = useState({})
-    const [size, setSize] = useState("XS");
-    const [quantity, setQuantity] = useState(1);
     const { id } = useParams()
+    const [size, setSize] = useState();
+
+    const [sizes, setSizes] = useState([])
 
     const getDetailProduct = async () => {
         const result = await getProductDetailAPI(id)
         console.log(result);
         setProduct(result.data)
+        setSizes(result.data.details)
     }
 
     useEffect(() => {
         console.log(id);
         getDetailProduct()
     }, [])
+
+    const handleAddToCart = async () => {
+        const payload = {
+            Id: size
+        }
+        console.log(payload);
+
+        const result = await addToCartAPI(payload)
+        if (result.message) {
+            notification.success({
+                message: "Add to cart success",
+            })
+            setSize()
+        }
+        else {
+            if (result.status == 401) notification.error({
+                message: "Vui lòng đăng nhập"
+            })
+            else
+                notification.error({
+                    message: "Vui lòng chọn kích thước"
+                })
+
+        }
+
+    }
 
     return (
         product.name ? <div className="product-detail-container">
@@ -31,7 +59,7 @@ const ProductDetail = () => {
                 <Col xs={24} md={12}>
                     <Card bordered={false} className="product-image-card">
                         <img
-                            src={product.images[0].fileName} // Thay bằng ảnh sản phẩm
+                            src={product.images[0]?.fileName} // Thay bằng ảnh sản phẩm
                             alt="Shoe"
                             className="product-image"
                         />
@@ -56,32 +84,23 @@ const ProductDetail = () => {
                     <h3 className="product-price">{product.price.toLocaleString("vi-VN")}đ</h3>
                     <hr />
 
-                    {/* Chọn kích thước */}
                     <div className="product-option">
                         <p>Kích thước:</p>
                         <Select value={size} onChange={setSize} style={{ width: 80 }}>
-                            <Option value="XS">XS</Option>
-                            <Option value="S">S</Option>
-                            <Option value="M">M</Option>
-                            <Option value="L">L</Option>
+                            {sizes.map((item, index) => (
+                                <Option key={index.size} value={item.id}>
+                                    {item.size}
+                                </Option>
+                            ))}
+
                         </Select>
                     </div>
 
-                    {/* Chọn số lượng */}
-                    <div className="product-option">
-                        <p>Số lượng:</p>
-                        <InputNumber
-                            min={1}
-                            max={10}
-                            value={quantity}
-                            onChange={setQuantity}
-                        />
-                    </div>
 
-                    <Row gutter={16}>
-                        <Col span={16}>
+                    <Row gutter={16} style={{ marginTop: "50px" }}>
+                        <Col span={16} >
                             {/* Nút thêm vào giỏ hàng */}
-                            <Button style={{ width: "100%" }} type="primary" icon={<ShoppingCartOutlined />} className="add-to-cart">
+                            <Button style={{ width: "100%" }} type="primary" icon={<ShoppingCartOutlined />} className="add-to-cart" onClick={handleAddToCart}>
                                 Thêm vào giỏ hàng
                             </Button>
                         </Col>
