@@ -41,12 +41,7 @@ const Header = () => {
 
   const settings = [
     {
-      label: (
-        <a href="#" rel="noopener noreferrer">
-          Setting
-        </a>
-      ),
-      key: '0',
+
     },
     ...(user.role == 'Admin'
       ? [

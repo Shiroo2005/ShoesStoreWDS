@@ -94,10 +94,6 @@ const router = createBrowserRouter([
         path: 'products',
         element: <ProductAdminPage />
       },
-      {
-        path: 'users',
-        element: <UserAdminPage />
-      },
     ],
   },
   {
