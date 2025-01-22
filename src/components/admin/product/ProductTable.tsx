@@ -97,6 +97,7 @@ export default function ProductTable({ data, setDataSource, onEdit, onDelete }) 
             render: (price) => `${price}`,
         },
         {
+
             title: "Description",
             dataIndex: "description",
             key: "description",

@@ -17,6 +17,7 @@ export const getAccountAPI = async () => {
     return axios.get(URL_BACKEND)
 }
 
+
 export const logout = async (id) => {
     return axios.post(`/auth/logout/${id}`)
 }

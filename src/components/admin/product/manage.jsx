@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, Modal } from "antd";
+
+import { Table, Button, Modal, message } from "antd";
 import "./index.css";
-import './ProductDetail.css'
 import { getAllProductsAPI, getProductDetailAPI } from "../../../utils/ProductAPI";
+import CreateModal from "./CreateModal";
 const App = () => {
   const [visible, setVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [products, setProducts] = useState([])
 
@@ -86,7 +88,9 @@ const App = () => {
     <>
       <div className="container">
         <div className="actions">
-          <Button type="primary">Thêm mới</Button>
+
+          <Button type="primary" onClick={() => setIsModalOpen(true)}>Thêm mới</Button>
+
         </div>
         <Table dataSource={products} columns={columns} pagination={false} />
       </div>
@@ -106,8 +110,9 @@ const App = () => {
           <div className="product-detail">
             <div className="product-info">
               <h1 className="product-name">{selectedProduct.name}</h1>
-              <p className="product-id">{selectedProduct.id}</p>
-              <p className="product-price">{selectedProduct.price}</p>
+              <p className="product-price">{selectedProduct.price.toLocaleString("vi-VN")}đ</p>
+
+
               <Table
                 title={() => (
                   <div style={{
@@ -153,6 +158,10 @@ const App = () => {
           </div>
         </Modal>
       )}
+      <CreateModal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </>
   );
 };
