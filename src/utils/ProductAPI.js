@@ -28,3 +28,7 @@ export const createProductAPI = async (formData) => {
         },
     });
 }
+
+export const dataDashboardAPI = async () => {
+    return await axios.get('/admin/details')
+}

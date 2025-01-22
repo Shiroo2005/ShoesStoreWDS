@@ -81,7 +81,10 @@ const CreateModal = ({ open, onClose, onSubmit, onEdit, editingProduct, categori
         const result = await createProductAPI(formData)
         if (result.message) {
             message.success("Create success")
-            open = false
+            onClose()
+            form.resetFields()
+            setFileListImage([])
+            setFileListProduct([])
         } else message.error("Thêm ảnh và size")
 
     }
@@ -199,16 +202,16 @@ const CreateModal = ({ open, onClose, onSubmit, onEdit, editingProduct, categori
                                                 <Form.Item
                                                     {...restField}
                                                     name={[name, 'first']}
-                                                    rules={[{ required: true, message: 'Missing first name' }]}
+                                                    rules={[{ required: true, message: 'Missing size' }]}
                                                 >
                                                     <InputNumber placeholder="Size" />
                                                 </Form.Item>
                                                 <Form.Item
                                                     {...restField}
                                                     name={[name, 'last']}
-                                                    rules={[{ required: true, message: 'Missing last name' }]}
+                                                    rules={[{ required: true, message: 'Missing quantity' }]}
                                                 >
-                                                    <InputNumber placeholder="Last Name" />
+                                                    <InputNumber placeholder="Quantity" />
                                                 </Form.Item>
                                                 <MinusCircleOutlined onClick={() => remove(name)} />
                                             </Space>
