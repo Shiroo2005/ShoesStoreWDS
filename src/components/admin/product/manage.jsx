@@ -1,31 +1,46 @@
 import React, { useEffect, useState } from "react";
-
 import { Table, Button, Modal, message } from "antd";
 import "./index.css";
 import { getAllProductsAPI, getProductDetailAPI } from "../../../utils/ProductAPI";
 import CreateModal from "./CreateModal";
+import { getAllCategoriesAPI } from "../../../utils/CategoryAPI";
+
 const App = () => {
   const [visible, setVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [products, setProducts] = useState([])
+  const [categories, setCategories] = useState([])
+  const [current, setCurrent] = useState(1)
+  const [totalPage, setTotalPage] = useState()
 
   const getAllProducts = async () => {
-    const result = await getAllProductsAPI();
+    const result = await getAllProductsAPI(current);
     console.log(result);
     setProducts(result.data)
+    setTotalPage(result.totalPage)
+  }
+
+  const getAllCategories = async () => {
+    const result = await getAllCategoriesAPI()
+    console.log(result);
+    setCategories(result.data)
+
   }
 
   const getProductDetail = async (id) => {
     const result = await getProductDetailAPI(id)
     console.log(result);
     setSelectedProduct(result.data)
+
+
   }
 
   useEffect(() => {
     getAllProducts()
-  }, [])
+    getAllCategories()
+  }, [current])
+
 
   const columns = [
     {
@@ -56,11 +71,7 @@ const App = () => {
         <Button onClick={() => handleViewDetail(record)}>Xem chi tiết</Button>
       ),
     },
-    {
-      title: "",
-      key: "edit",
-      render: () => <Button>Chỉnh sửa</Button>,
-    },
+
     {
       title: "",
       key: "delete",
@@ -76,6 +87,7 @@ const App = () => {
     setVisible(true);
   };
 
+
   const handleOk = () => {
     setVisible(false);
   };
@@ -83,16 +95,25 @@ const App = () => {
   const handleCancel = () => {
     setVisible(false);
   };
+  const onChangeTable = (pagination, filters, sorter, extra) => {
+    if (pagination.current != current) setCurrent(pagination.current)
+
+  }
 
   return (
     <>
       <div className="container">
         <div className="actions">
-
           <Button type="primary" onClick={() => setIsModalOpen(true)}>Thêm mới</Button>
-
         </div>
-        <Table dataSource={products} columns={columns} pagination={false} />
+        <Table dataSource={products} columns={columns} pagination={{
+          current: current,
+          pageSize: 6,
+          total: totalPage * 6
+        }} totalPage={totalPage} current={current}
+          onChange={onChangeTable}
+
+        />
       </div>
 
       {selectedProduct && (
@@ -111,8 +132,6 @@ const App = () => {
             <div className="product-info">
               <h1 className="product-name">{selectedProduct.name}</h1>
               <p className="product-price">{selectedProduct.price.toLocaleString("vi-VN")}đ</p>
-
-
               <Table
                 title={() => (
                   <div style={{
@@ -161,6 +180,7 @@ const App = () => {
       <CreateModal
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        categories={categories}
       />
     </>
   );

@@ -20,3 +20,11 @@ export const deleteProductInCartAPI = async (id) => {
     const payload = { id: id }
     return await axios.delete('/cart', payload)
 }
+
+export const createProductAPI = async (formData) => {
+    return await axios.post("/products", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+}

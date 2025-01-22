@@ -130,7 +130,8 @@ const HomePage = () => {
               <Pagination align="center"
                 defaultCurrent={1}
                 current={current}
-                total={totalPage}
+                pageSize={6}
+                total={totalPage * 6}
                 onChange={(page, pageSize) => setCurrent(page)
                 }
               />

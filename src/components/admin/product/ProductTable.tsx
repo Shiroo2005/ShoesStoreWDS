@@ -417,7 +417,10 @@ export default function ProductTable({ data, setDataSource, onEdit, onDelete }) 
                     dataSource={data}
                     columns={mergedColumns}
                     rowClassName="editable-row"
-                    pagination={{ onChange: cancel }}
+                    pagination={{
+                        onChange: cancel
+
+                    }}
                 />
             </Form>
         </>
