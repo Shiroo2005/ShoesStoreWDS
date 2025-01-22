@@ -33,14 +33,14 @@ const ProductTable = ({ data, onEdit, onDelete }) => {
             render: (price) => `${price.toLocaleString('vi', { style: 'currency', currency: 'VND' })}`,
         },
         {
-            title: "Danh mục",
-            dataIndex: "categoryIds",
-            key: "categoryIds",
+            title: "Hãng",
+            dataIndex: "brand",
+            key: "brand",
         },
         {
             title: "Số lượng",
-            dataIndex: "qty",
-            key: "qty",
+            dataIndex: "quantity",
+            key: "quantity",
             render: (_, record) => (
                 <InputNumber
                     min={1}
@@ -55,7 +55,7 @@ const ProductTable = ({ data, onEdit, onDelete }) => {
             title: "Thành tiền",
             dataIndex: "total",
             key: "total",
-            render: (total) => `${total.toLocaleString('vi', { style: 'currency', currency: 'VND' })}`,
+            render: (total) => `${total?.toLocaleString('vi', { style: 'currency', currency: 'VND' })}`,
         },
         {
             title: "",

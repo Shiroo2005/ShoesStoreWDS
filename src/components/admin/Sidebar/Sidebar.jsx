@@ -17,7 +17,6 @@ const Sidebar = () => {
 
   const menuItems = [
     { key: "/", icon: <HomeOutlined />, label: "TRANG CHỦ" },
-    { key: "/users", icon: <UserOutlined />, label: "KHÁCH HÀNG" },
     { key: "/products", icon: <ShoppingOutlined />, label: "SẢN PHẨM" },
   ];
 

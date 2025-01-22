@@ -1,61 +1,164 @@
-import React, { useState } from "react";
-import { Button, message } from "antd";
+import React, { useEffect, useState } from "react";
+import { Table, Button, Modal, message } from "antd";
+import "./index.css";
+import { getAllProductsAPI, getProductDetailAPI } from "../../../utils/ProductAPI";
 import CreateModal from "./CreateModal";
-import ProductTable from "./ProductTable";
-import { productData } from "./data";
-
-const ProductManagement = () => {
-  const [data, setData] = useState(productData);
+const App = () => {
+  const [visible, setVisible] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingProduct, setEditingProduct] = useState(null);
+  const [products, setProducts] = useState([])
 
-  const handleAdd = (product) => {
-    if (!product.name || !product.price) {
-      message.error("Vui lòng nhập đầy đủ thông tin sản phẩm!");
-      return;
-    }
-    product.code = data.length + 1;
-    setData([...data, { ...product, key: `${data.length + 1}` }]);
+  const getAllProducts = async () => {
+    const result = await getAllProductsAPI();
+    console.log(result);
+    setProducts(result.data)
+  }
+
+  const getProductDetail = async (id) => {
+    const result = await getProductDetailAPI(id)
+    console.log(result);
+    setSelectedProduct(result.data)
+  }
+
+  useEffect(() => {
+    getAllProducts()
+  }, [])
+
+
+  const columns = [
+    {
+      title: "Mã sản phẩm",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Tên sản phẩm",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Giá tiền",
+      dataIndex: "price",
+      key: "price",
+      render: (e) => `${e.toLocaleString("vi-VN")}đ`
+    },
+    {
+      title: "Thương hiệu",
+      dataIndex: "brand",
+      key: "brand",
+    },
+    {
+      title: "",
+      key: "view",
+      render: (text, record) => (
+        <Button onClick={() => handleViewDetail(record)}>Xem chi tiết</Button>
+      ),
+    },
+    {
+      title: "",
+      key: "edit",
+      render: () => <Button>Chỉnh sửa</Button>,
+    },
+    {
+      title: "",
+      key: "delete",
+      render: () => (
+        <Button danger>Xoá</Button>
+      ),
+    },
+  ];
+
+  const handleViewDetail = (record) => {
+    setSelectedProduct(record);
+    getProductDetail(record.id)
+    setVisible(true);
   };
 
-  const handleEdit = (product) => {
-    setEditingProduct(product);
-    setIsModalOpen(true);
+  const handleOk = () => {
+    setVisible(false);
   };
 
-  const handleSaveEdit = (editedProduct) => {
-    const updatedData = data.map((item) =>
-      item.key === editedProduct.key ? { ...item, ...editedProduct } : item
-    );
-    setData(updatedData);
-    setIsModalOpen(false);
-  };
-
-  const handleDelete = (key) => {
-    setData(data.filter((item) => item.key !== key));
+  const handleCancel = () => {
+    setVisible(false);
   };
 
   return (
-    <div className="product-management">
-      <div className="actions">
-        <Button type="primary" onClick={() => setIsModalOpen(true)}>
-          Thêm mới
-        </Button>
+    <>
+      <div className="container">
+        <div className="actions">
+          <Button type="primary" onClick={() => setIsModalOpen(true)}>Thêm mới</Button>
+        </div>
+        <Table dataSource={products} columns={columns} pagination={false} />
       </div>
-      <ProductTable
-        data={data}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
+
+      {selectedProduct && (
+        <Modal
+          title="Thông tin sản phẩm"
+          visible={visible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          footer={[
+            <Button key="back" onClick={handleCancel}>
+              Đóng
+            </Button>
+          ]}
+        >
+          <div className="product-detail">
+            <div className="product-info">
+              <h1 className="product-name">{selectedProduct.name}</h1>
+              <p className="product-price">{selectedProduct.price.toLocaleString("vi-VN")}đ</p>
+              <Table
+                title={() => (
+                  <div style={{
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                    padding: "10px",
+                    background: "#f0f2f5",
+                    textAlign: "center"
+                  }}>
+                    Bảng chi tiết số lượng
+                  </div>
+                )}
+                dataSource={selectedProduct.details}
+                bordered
+                columns={[
+                  {
+                    title: "Size",
+                    dataIndex: "size",
+                    key: "size",
+                    align: "center",
+                    render: (text) => <span style={{ fontWeight: "bold", color: "#1890ff" }}>{text}</span>
+                  },
+                  {
+                    title: "Số lượng",
+                    dataIndex: "stockQuantity",
+                    key: "quantity",
+                    align: "center",
+                    render: (text) => (
+                      <span style={{
+                        fontWeight: "bold",
+                        color: text > 5 ? "#52c41a" : "#f5222d"  // Xanh nếu nhiều hàng, đỏ nếu ít hàng
+                      }}>
+                        {text}
+                      </span>
+                    )
+                  }
+                ]}
+                pagination={false}
+              />
+
+
+            </div>
+          </div>
+        </Modal>
+      )}
       <CreateModal
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onSubmit={handleAdd}
-        onEdit={handleSaveEdit}
-        editingProduct={editingProduct}
       />
-    </div>
+    </>
   );
 };
 
-export default ProductManagement;
+export default App;
