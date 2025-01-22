@@ -14,6 +14,7 @@ import ProductDetail from './pages/ProductDetail/ProductDetail';
 import ContactPage from './pages/Contact/Contact';
 import NotFoundPage from './pages/Error/NotFoundPage/NotFound';
 import AboutPage from './pages/About/About';
+import AccountSettings from './pages/AccountSettings/AccountSettings';
 import { useDispatch, useSelector } from 'react-redux';
 import { doGetAccountAction } from './redux/account/accountSlice';
 import { getAccountAPI } from './utils/AuthAPI';
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
         path: "about",
         element: <AboutPage />
       },
+      {
+        path: "user/:id",
+        element: <AccountSettings />,
+      }      
     ]
   },
   {
