@@ -7,12 +7,16 @@ import { deleteProductFromCartAPI, getCartAPI } from "../../utils/ProductAPI";
 import { useSelector } from "react-redux";
 import { OrderTable } from "./OrderTable";
 import { convertToOrderTableData } from "../../utils/Converter";
+import { newOrder } from "../../utils/OrderAPI";
+import { useNavigate } from "react-router-dom";
 
 const { Content } = Layout;
 
 export default function OrderPage() {
     const [data, setData] = useState([]);
     const [selectedKeys, setSelectedKeys] = useState([]); // Lưu các `key` đã chọn
+    const user = useSelector(state => state.account.user);
+    const nav = useNavigate()
     const getCart = async () => {
         const result = await getCartAPI()
 
@@ -37,6 +41,8 @@ export default function OrderPage() {
         }
     };
 
+
+
     const handleRemove = async (key) => {
         setData(data.filter((item) => item.key !== key));
         const result = await deleteProductFromCartAPI(key)
@@ -51,9 +57,25 @@ export default function OrderPage() {
 
     // Tính tổng giá trị các mục đã chọn
     const selectedSubtotal = data
-        ?.filter((item) => selectedKeys.includes(item.key)) // Chỉ tính các mục được chọn
         ?.reduce((total, item) => total + item.total, 0);
+    const handleNewOrder = async () => {
+        if (selectedSubtotal == 0) {
+            notification.error({
+                message: "Order failed",
+                description: "Order phải gồm ít nhất 1 sản phẩm"
+            })
+            return
+        }
+        const result = await newOrder(user.id)
+        if (result || !result) console.log(result);
+        if (result.message) {
+            nav('/')
+            notification.success({
+                message: "Order success",
+            })
+        }
 
+    }
     return (
         <Layout>
             <main className="order-container">
@@ -85,7 +107,7 @@ export default function OrderPage() {
                     }}
                 >
                     <ShippingOptions />
-                    <OrderSummary subtotal={selectedSubtotal} />
+                    <OrderSummary subtotal={selectedSubtotal} handleNewOrder={handleNewOrder} />
                 </Content>
             </main>
         </Layout>

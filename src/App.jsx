@@ -22,6 +22,7 @@ import AdminHeader from './components/admin/headeradmin/AdminHeader';
 import { Layout } from 'antd';
 import NotPermitted from './pages/Error/NotPermitted/NotPermitted';
 import OrderPage from './pages/order';
+import OrderHistory from './pages/OrderHistory/orderHistory';
 
 const LayoutUser = () => {
   return (
@@ -75,6 +76,13 @@ const router = createBrowserRouter([
         path: "about",
         element: <AboutPage />
       },
+      {
+        path: "/order-history",
+        element: <OrderHistory />
+      }, {
+        path: "/order",
+        element: <OrderPage />
+      }
     ]
   },
   {
@@ -100,10 +108,7 @@ const router = createBrowserRouter([
     path: "/register",
     element: <RegisterPage />
   },
-  {
-    path: "/order",
-    element: <OrderPage />
-  }
+
 ]);
 
 

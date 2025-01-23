@@ -54,7 +54,12 @@ const Header = () => {
           key: '3',
         },
       ]
-      : []),
+      : []), {
+      label: (
+        <Link to="/order-history">Đã mua</Link>
+      ),
+      key: '2',
+    },
     {
       label: (
         <a onClick={handleLogout} rel="noopener noreferrer">

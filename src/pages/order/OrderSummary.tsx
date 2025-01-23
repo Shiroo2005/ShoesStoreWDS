@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const { Text } = Typography;
 
-export const OrderSummary = ({ subtotal, shippingCost = 0 }) => {
+export const OrderSummary = ({ subtotal, shippingCost = 0, handleNewOrder }) => {
     const total = subtotal + shippingCost;
     const nav = useNavigate()
     return (
@@ -30,12 +30,7 @@ export const OrderSummary = ({ subtotal, shippingCost = 0 }) => {
                     fontWeight: "bold",
                     height: "50px",
                 }}
-                onClick={() => {
-                    nav('/')
-                    notification.success({
-                        message: "Order success",
-                    })
-                }}
+                onClick={handleNewOrder}
             >
                 Thanh toán
             </Button>

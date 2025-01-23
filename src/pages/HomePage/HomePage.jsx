@@ -132,8 +132,9 @@ const HomePage = () => {
                 current={current}
                 pageSize={6}
                 total={totalPage * 6}
-                onChange={(page, pageSize) => setCurrent(page)
-                }
+                onChange={(page, pageSize) => setCurrent(page)}
+                showSizeChanger={false}
+
               />
             </Col>
           </Row>

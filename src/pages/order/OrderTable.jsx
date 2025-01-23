@@ -92,19 +92,10 @@ export function OrderTable({ data, onQtyChange, onRemove, selectedKeys, onSelect
         },
     ];
 
-    // Cấu hình rowSelection để xử lý chọn mục
-    const rowSelection = {
-        selectedRowKeys: selectedKeys,
-        onChange: (selectedRowKeys) => {
-            onSelectChange(selectedRowKeys);
-        },
-    };
-
     return (
         <Table
             dataSource={data}
             columns={columns}
-            rowSelection={rowSelection} // Thêm checkbox
             pagination={false}
         />
     );

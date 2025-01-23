@@ -3,7 +3,7 @@ import { useEffect } from "react"
 import './register.css'
 import { register } from "../../utils/AuthAPI"
 import { HttpStatusCode } from "axios"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const RegisterPage = () => {
 
@@ -58,9 +58,11 @@ const RegisterPage = () => {
                 <div style={{ padding: '80px' }}>
                     <h2 style={{ fontSize: "48px", fontWeight: "normal" }}>Đăng ký</h2>
                     <p style={{ fontWeight: "400" }}>Đã có tài khoản?&nbsp;<a href="/login">Đăng nhập</a></p>
-                    <Button type="primary" style={{ marginBlock: "15px", paddingInline: "30px" }}>
-                        Google
-                    </Button>
+                    <Link to='/'>
+                        <Button type="primary" style={{ marginBlock: "15px", paddingInline: "30px" }}>
+                            Trang chủ
+                        </Button>
+                    </Link>
                     <br />
                     <b>hoặc đăng ký bằng email</b>
 

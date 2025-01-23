@@ -118,11 +118,7 @@ const LoginPage = () => {
                                 }}
                             />
                         </Form.Item>
-                        <Form.Item wrapperCol={24} name="RememberMe" valuePropName="checked">
-                            <Checkbox style={{ color: "#FF5733" }}>
-                                <b>Remember me</b>
-                            </Checkbox>
-                        </Form.Item>
+
 
                         <Form.Item wrapperCol={24}>
                             <Button className="warning-button" htmlType="submit" block
