@@ -1,11 +1,19 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-import { Table, Space, Button, InputNumber } from "antd";
+import { Table, Space, Button, InputNumber, message, notification } from "antd";
+import { deleteProductFromCartAPI } from "../../utils/ProductAPI";
 
 export function OrderTable({ data, onQtyChange, onRemove, selectedKeys, onSelectChange }) {
     const handleDelete = async (record) => {
         onRemove(record.key)
         console.log(record);
+
+        console.log("dsdssdv");
+
+        const result = await deleteProductFromCartAPI(record.id)
+        if (result) console.log("scscs");
+        else console.log("cdcdsddssdv");
+
 
     }
 

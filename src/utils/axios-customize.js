@@ -12,7 +12,7 @@ const NO_RETRY_HEADER = 'x-no-retry';
 const handleRefresh = async () => {
     try {
         const response = await instance.post('/api/accesstoken');
-        return response?.accessToken ?? null;
+        return response
     } catch (error) {
         console.error("Error refreshing token:", error);
         return null;
@@ -22,10 +22,8 @@ const handleRefresh = async () => {
 // 🛠 Request Interceptor - Thêm Authorization & x-no-retry
 instance.interceptors.request.use(config => {
     const token = localStorage.getItem("access_token");
-    if (token) {
-        config.headers['Authorization'] = `Bearer ${token}`;
-        config.headers['Refresh-Token'] = localStorage.getItem("refresh_token")
-    }
+    config.headers['Authorization'] = `Bearer ${token}`;
+    config.headers['Refresh-Token'] = localStorage.getItem("refresh_token")
     if (!config.headers[NO_RETRY_HEADER]) {
         config.headers[NO_RETRY_HEADER] = 'false';
     }
@@ -38,14 +36,15 @@ instance.interceptors.request.use(config => {
 instance.interceptors.response.use(
     response => response?.data,
     async error => {
-        console.log("Error Headers:", error.config.headers);
+        console.log("Error Headers:", error.config.headers[NO_RETRY_HEADER]);
 
         // access token expired
         if (error.response?.status === 401 && error.config.headers?.[NO_RETRY_HEADER] === 'false') {
-            const access_token = await handleRefresh();
-            if (access_token) {
-                localStorage.setItem("access_token", access_token);
-                error.config.headers['Authorization'] = `Bearer ${access_token}`;
+            const result = await handleRefresh();
+            if (result) {
+                localStorage.setItem("access_token", result.accessToken);
+                localStorage.setItem("refresh_token", result.refreshToken);
+                error.config.headers['Authorization'] = `Bearer ${result.accessToken}`;
                 error.config.headers[NO_RETRY_HEADER] = 'true'; // Đánh dấu đã retry
                 error.config.baseURL = baseUrl; // Đảm bảo request có baseURL
                 return instance.request(error.config);

@@ -23,6 +23,7 @@ export default function OrderPage() {
 
     useEffect(() => {
         getCart()
+        console.log("cđcsdsd");
 
     }, [])
 

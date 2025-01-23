@@ -35,5 +35,5 @@ export const deleteProductAPI = async (id) => {
 }
 
 export const deleteProductFromCartAPI = async (id) => {
-    return await axios.delete(`/products/${id}`)
+    return await axios.delete(`/cart/${id}`)
 }
