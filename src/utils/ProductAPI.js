@@ -32,3 +32,7 @@ export const createProductAPI = async (formData) => {
 export const dataDashboardAPI = async () => {
     return await axios.get('/admin/details')
 }
+
+export const deleteProductAPI = async (id) => {
+    return await axios.delete(`/products/${id}`)
+}

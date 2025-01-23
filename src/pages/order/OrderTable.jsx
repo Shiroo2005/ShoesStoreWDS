@@ -3,6 +3,12 @@ import React from "react";
 import { Table, Space, Button, InputNumber } from "antd";
 
 export function OrderTable({ data, onQtyChange, onRemove, selectedKeys, onSelectChange }) {
+    const handleDelete = async (record) => {
+        onRemove(record.key)
+        console.log(record);
+
+    }
+
     const columns = [
         {
             title: "Sản Phẩm",
@@ -71,7 +77,7 @@ export function OrderTable({ data, onQtyChange, onRemove, selectedKeys, onSelect
         },
         {
             render: (_, record) => (
-                <Button danger type="link" onClick={() => onRemove(record.key)}>
+                <Button danger type="link" onClick={() => handleDelete(record)}>
                     Xóa
                 </Button>
             ),

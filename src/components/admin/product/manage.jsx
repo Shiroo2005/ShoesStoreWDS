@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Modal, message } from "antd";
 import "./index.css";
-import { getAllProductsAPI, getProductDetailAPI } from "../../../utils/ProductAPI";
+import { deleteProductAPI, getAllProductsAPI, getProductDetailAPI } from "../../../utils/ProductAPI";
 import CreateModal from "./CreateModal";
 import { getAllCategoriesAPI } from "../../../utils/CategoryAPI";
 
@@ -41,6 +41,15 @@ const App = () => {
     getAllCategories()
   }, [current])
 
+  const handleDelete = async (record) => {
+    console.log(record);
+    const result = await deleteProductAPI(record.id)
+    console.log(result);
+    if (result.message) message.success(result.message)
+    else message.error("Delete failed")
+    await getAllProducts()
+  }
+
 
   const columns = [
     {
@@ -75,8 +84,8 @@ const App = () => {
     {
       title: "",
       key: "delete",
-      render: () => (
-        <Button danger>Xoá</Button>
+      render: (record) => (
+        <Button danger onClick={() => handleDelete(record)}>Xoá</Button>
       ),
     },
   ];
