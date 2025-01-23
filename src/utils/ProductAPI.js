@@ -16,10 +16,7 @@ export const getCartAPI = async (id) => {
     return await axios.get(`/cart`)
 }
 
-export const deleteProductInCartAPI = async (id) => {
-    const payload = { id: id }
-    return await axios.delete('/cart', payload)
-}
+
 
 export const createProductAPI = async (formData) => {
     return await axios.post("/products", formData, {
@@ -34,5 +31,9 @@ export const dataDashboardAPI = async () => {
 }
 
 export const deleteProductAPI = async (id) => {
+    return await axios.delete(`/products/${id}`)
+}
+
+export const deleteProductFromCartAPI = async (id) => {
     return await axios.delete(`/products/${id}`)
 }

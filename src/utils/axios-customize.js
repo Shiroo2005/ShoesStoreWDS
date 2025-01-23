@@ -1,76 +1,74 @@
 import axios from "axios";
 
-const baseUrl = `${import.meta.env.VITE_BACKEND_URL}`
+const baseUrl = import.meta.env.VITE_BACKEND_URL;
 
 const instance = axios.create({
     baseURL: baseUrl,
     withCredentials: true
-})
+});
 
+const NO_RETRY_HEADER = 'x-no-retry';
 
 const handleRefresh = async () => {
-    const response = await instance.post('/api/accesstoken')
+    try {
+        const response = await instance.post('/api/accesstoken');
+        return response?.accessToken ?? null;
+    } catch (error) {
+        console.error("Error refreshing token:", error);
+        return null;
+    }
+};
 
-    if (response) {
-        return response.accessToken
-    } else return null
-
-}
-instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` }
-
-// Add a request interceptor
-instance.interceptors.request.use(function (config) {
-    instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` }
-
-    // Do something before request is sent
+// 🛠 Request Interceptor - Thêm Authorization & x-no-retry
+instance.interceptors.request.use(config => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+        config.headers['Refresh-Token'] = localStorage.getItem("refresh_token")
+    }
+    if (!config.headers[NO_RETRY_HEADER]) {
+        config.headers[NO_RETRY_HEADER] = 'false';
+    }
     return config;
-}, function (error) {
-    // Do something with request error
+}, error => {
     return Promise.reject(error);
 });
 
+// 🛠 Response Interceptor - Xử lý 401 Unauthorized
+instance.interceptors.response.use(
+    response => response?.data,
+    async error => {
+        console.log("Error Headers:", error.config.headers);
 
-const NO_RETRY_HEADER = 'x-no-retry'
-// Add a response interceptor
-instance.interceptors.response.use(function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
-    return response?.data
-}, async function (error) {
-    instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` }
-
-    console.log(error, error.config.headers[NO_RETRY_HEADER]);
-
-
-    // access token expired
-    if (error.status == 401 && error.config.headers[NO_RETRY_HEADER] == 'false') {
-        const access_token = await handleRefresh()
-        error.config.headers[NO_RETRY_HEADER] = 'true'
-        if (access_token) {
-            localStorage.setItem("access_token", access_token)
-
-            error.config.headers['Authorization'] = `Bearer ${access_token} `
-            return axios.request(error.config)
+        // access token expired
+        if (error.response?.status === 401 && error.config.headers?.[NO_RETRY_HEADER] === 'false') {
+            const access_token = await handleRefresh();
+            if (access_token) {
+                localStorage.setItem("access_token", access_token);
+                error.config.headers['Authorization'] = `Bearer ${access_token}`;
+                error.config.headers[NO_RETRY_HEADER] = 'true'; // Đánh dấu đã retry
+                error.config.baseURL = baseUrl; // Đảm bảo request có baseURL
+                return instance.request(error.config);
+            }
         }
+
+        //refresh token expire or invalid
+        //refresh token expired
+        if (
+            error.config && error.response
+            && +error.response.status === 400
+            && error.config.url === '/api/accesstoken'
+        ) {
+            if (
+                window.location.pathname !== '/'
+            ) {
+                window.location.href = '/login';
+            } else console.log('sss')
+        }
+
+
+        return Promise.reject(error.response ?? error);
     }
+);
 
-    // //refresh token expired
-    // if (
-    //     error.config && error.response
-    //     && +error.response.status === 400
-    //     && error.config.url === '/api/v1/auth/refresh'
-    // ) {
-    //     if (
-    //         window.location.pathname !== '/'
-    //     ) {
-    //         window.location.href = '/login';
-    //     } else console.log('sss')
-    // }
-
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    // return error?.response?.data ?? Promise.reject(error)
-    return error.response
-});
-
-export default instance
+export default instance;

@@ -3,7 +3,7 @@ import { Layout, notification } from "antd";
 import { OrderHeader } from "./OrderHeader";
 import { ShippingOptions } from "./ShippingOptions";
 import { OrderSummary } from "./OrderSummary";
-import { deleteProductInCartAPI, getCartAPI } from "../../utils/ProductAPI";
+import { deleteProductFromCartAPI, getCartAPI } from "../../utils/ProductAPI";
 import { useSelector } from "react-redux";
 import { OrderTable } from "./OrderTable";
 import { convertToOrderTableData } from "../../utils/Converter";
@@ -23,6 +23,7 @@ export default function OrderPage() {
 
     useEffect(() => {
         getCart()
+
     }, [])
 
     const handleQtyChange = (key, value) => {
@@ -37,7 +38,7 @@ export default function OrderPage() {
 
     const handleRemove = async (key) => {
         setData(data.filter((item) => item.key !== key));
-        const result = await deleteProductInCartAPI(key)
+        const result = await deleteProductFromCartAPI(key)
         if (result.message) notification.success({
             message: "Remove success",
         })
